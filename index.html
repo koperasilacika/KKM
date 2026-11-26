@@ -219,9 +219,8 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
  <div class="wrap">
   <h2 class="t">Laporan usaha</h2>
   <p class="sub">Pertanggungjawaban pengurus per periode: barang & makanan kemasan, makanan jadi, dan rekap konsolidasi.</p>
-  <div class="card scroll"><table><thead><tr><th>Laporan</th><th>Periode</th><th>Unit</th><th></th></tr></thead><tbody>
-   <tr><td>[Judul laporan]</td><td>[Bulan Tahun]</td><td>Konsolidasi</td><td><a href="#masuk">Masuk untuk unduh</a></td></tr>
-   <tr><td>[Judul laporan]</td><td>[Bulan Tahun]</td><td>Makanan Jadi</td><td><a href="#masuk">Masuk untuk unduh</a></td></tr>
+  <div class="card scroll"><table><thead><tr><th>Laporan</th><th>Periode</th><th>Unit</th><th></th></tr></thead><tbody id="repList">
+   <tr><td colspan="4" style="color:var(--mute);text-align:center">Memuat daftar laporan…</td></tr>
   </tbody></table></div>
   <p class="lock">🔒 Berkas PDF hanya dapat diunduh anggota yang sudah login.</p>
  </div>
@@ -235,8 +234,9 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
   </div>
   <div class="card">
    <h3>Anggota</h3><ul><li>Saldo simpanan pokok, wajib, dan sukarela</li><li>Sisa tagihan dan cicilan terdekat</li><li>Berita terbaru dan unduhan laporan</li></ul>
-   <h3 style="margin-top:18px">Pengurus</h3><ul><li>Antrean pendaftar dan pengajuan pinjaman</li><li>Omzet usaha bulan terakhir</li><li>Log aktivitas dan persetujuan cepat</li></ul>
-   <p style="margin:18px 0 0"><a class="btn" href="admin.html">Masuk</a></p>
+   <p style="margin:14px 0 0"><a class="btn" href="anggota.html">Masuk Anggota</a></p>
+   <h3 style="margin-top:22px">Pengurus</h3><ul><li>Antrean pendaftar dan pengajuan pinjaman</li><li>Omzet usaha bulan terakhir</li><li>Log aktivitas dan persetujuan cepat</li></ul>
+   <p style="margin:14px 0 0"><a class="btn ghost" style="border-color:var(--navy);color:var(--navy)" href="admin.html">Masuk Pengurus</a></p>
   </div>
  </div>
 </section>
@@ -252,7 +252,7 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
 </footer>
 
 <script>
-var API='https://script.google.com/macros/s/AKfycby0zRAYQPrfu-cQVMND9_2gOsHfRW3eZq_GxOY0O0Hn29fe6yA1jLhI6OC8h_YDlraK/exec';/*  */
+var API='https://script.google.com/macros/s/AKfycbyGcRWCanS0GXF_pfi6H9ANiEyOdVXcoxG96Mfu2kk2VFfkaTCqdim6n4w1inBEqLar/exec';/*  */
 var $=function(i){return document.getElementById(i)};
 $('mb').onclick=function(){var o=$('mnav').classList.toggle('open');this.setAttribute('aria-expanded',o)};
 $('mnav').onclick=function(e){if(e.target.tagName==='A'){this.classList.remove('open');$('mb').setAttribute('aria-expanded',false)}};
@@ -286,7 +286,18 @@ $('reg').addEventListener('submit',function(e){
  .catch(function(){$('rok').className='err';$('rok').textContent='Koneksi gagal. Coba lagi sebentar lagi.'})
  .then(function(){btn.disabled=false});
 });
-if(API){fetch(API).then(function(r){return r.json()}).then(function(j){if(j.ok){$('cA').textContent=j.active;$('cP').textContent=j.pending}}).catch(function(){})}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+if(API){fetch(API).then(function(r){return r.json()}).then(function(j){
+ if(!j.ok)return;
+ $('cA').textContent=j.active;$('cP').textContent=j.pending;
+ var tb=$('repList');
+ if(tb&&Array.isArray(j.reports)){
+  if(!j.reports.length){tb.innerHTML='<tr><td colspan="4" style="color:var(--mute);text-align:center">Belum ada laporan diterbitkan.</td></tr>';return}
+  tb.innerHTML=j.reports.map(function(r){
+   return '<tr><td><b>'+esc(r.title)+'</b></td><td>'+esc(r.period)+'</td><td>'+esc(r.unit)+'</td><td><a href="anggota.html">Masuk untuk unduh</a></td></tr>';
+  }).join('');
+ }
+}).catch(function(){var tb=$('repList');if(tb)tb.innerHTML='<tr><td colspan="4" style="color:var(--mute);text-align:center">Gagal memuat daftar laporan.</td></tr>'})}
 </script>
 </body>
 </html>
