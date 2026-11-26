@@ -48,7 +48,7 @@ input[type=text],input[type=password],input[type=search]{width:100%;min-height:4
 </style>
 </head>
 <body>
-<header><div class="wrap bar"><span class="lg" role="img" aria-label="Logo koperasi"></span><b>Panel Pengurus<small>Koperasi Konsumen Mandiri</small></b><button class="btn ghost" id="out" hidden>Keluar</button></div></header>
+<header><div class="wrap bar"><span class="lg" role="img" aria-label="Logo koperasi"></span><b>Panel Pengurus<small>Koperasi Konsumen Mandiri</small></b><a class="btn ghost" href="index.html" style="text-decoration:none">Beranda</a><button class="btn ghost" id="out" hidden>Keluar</button></div></header>
 
 <main class="wrap">
  <form class="card" id="login" novalidate>
@@ -60,7 +60,7 @@ input[type=text],input[type=password],input[type=search]{width:100%;min-height:4
  </form>
 
  <section id="app" aria-label="Verifikasi anggota">
-  <div class="tools" id="views" role="group" aria-label="Bagian"><button class="tab" type="button" data-v="members" aria-pressed="true">Anggota</button><button class="tab" type="button" data-v="loans" aria-pressed="false">Pinjaman</button></div>
+  <div class="tools" id="views" role="group" aria-label="Bagian"><button class="tab" type="button" data-v="members" aria-pressed="true">Anggota</button><button class="tab" type="button" data-v="loans" aria-pressed="false">Pinjaman</button><button class="tab" type="button" data-v="reports" aria-pressed="false">Laporan</button></div>
   <div class="tools" id="tabs" role="group" aria-label="Filter status"></div>
   <div class="tools"><input class="search" id="q" type="search" placeholder="Cari nama, NIK, atau nomor registrasi" aria-label="Cari pendaftar"><button class="btn" id="rf" type="button">Muat ulang</button></div>
   <div id="list" aria-live="polite"></div>
@@ -132,8 +132,8 @@ $('list').onclick=function(e){
  }).catch(function(){toast('Koneksi gagal.');b.disabled=false});
 };
 
-function render(){S.view==='loans'?renderL():renderM()}
-function load(){S.view==='loans'?loadL():loadM()}
+function render(){S.view==='loans'?renderL():S.view==='reports'?renderR():renderM()}
+function load(){S.view==='loans'?loadL():S.view==='reports'?loadR():loadM()}
 $('views').onclick=function(e){var b=e.target.closest('[data-v]');if(!b)return;S.view=b.dataset.v;S.tab='pending';$('q').value='';[].forEach.call($('views').children,function(x){x.setAttribute('aria-pressed',x===b)});load()};
 var LT=[['pending','Menunggu'],['approved','Berjalan'],['paid_off','Lunas'],['rejected','Ditolak'],['all','Semua']];
 var LL={pending:'Menunggu',approved:'Berjalan',rejected:'Ditolak',paid_off:'Lunas'},IL={paid:'Lunas',overdue:'Jatuh tempo',unpaid:'Belum bayar'};
@@ -177,6 +177,62 @@ $('list').addEventListener('click',function(e){
   toast('Berhasil.');load();
  }).catch(function(){toast('Koneksi gagal.');b.disabled=false});
 });
+
+S.reps=[];
+function loadR(){
+ $('tabs').innerHTML='';
+ $('list').innerHTML='<p class="empty">Memuat…</p>';
+ call({action:'reports_list',token:S.token}).then(function(j){
+  if(j.expired){logout(j.error);return}
+  if(!j.ok){$('list').innerHTML='<p class="empty">'+esc(j.error)+'</p>';return}
+  S.reps=j.reports.reverse();renderR();
+ }).catch(function(){$('list').innerHTML='<p class="empty">Koneksi gagal. Coba muat ulang.</p>'});
+}
+function renderR(){
+ $('tabs').innerHTML='';
+ var q=$('q').value.toLowerCase().trim();
+ var form='<form class="card" id="rfrm" style="margin-bottom:16px"><h3 style="margin:0 0 12px;font-size:17px">Terbitkan laporan baru</h3>'+
+ '<div class="meta" style="margin-bottom:10px">'+
+ '<div><label for="rt">Judul laporan</label><input id="rt" type="text" placeholder="contoh: Laporan Keuangan & RAT" required></div>'+
+ '<div><label for="rp_p">Periode</label><input id="rp_p" type="text" placeholder="contoh: November 2026" required></div>'+
+ '<div><label for="ru">Unit usaha</label><input id="ru" type="text" placeholder="Konsolidasi / Makanan Jadi / Kemasan" value="Konsolidasi" required></div>'+
+ '<div><label for="rurl">Link PDF (Google Drive / GitHub)</label><input id="rurl" type="text" placeholder="https://drive.google.com/..." required></div>'+
+ '</div><div class="f"><label for="rsum">Ringkasan singkat (opsional)</label><input id="rsum" type="text" placeholder="Keterangan singkat isi laporan"></div>'+
+ '<button class="btn" type="submit">Simpan & Tayangkan</button></form>';
+ var rows=S.reps.filter(function(r){return !q||(r.title+' '+r.period+' '+r.unit).toLowerCase().indexOf(q)>-1});
+ var items=rows.length?rows.map(function(r){
+  var act=r.status==='active';
+  return '<article class="item"><div class="top"><div><h3>'+esc(r.title)+'</h3><span style="font-size:13px;color:var(--mute)">'+esc(r.report_code)+' · '+esc(r.period)+' · '+esc(r.unit)+'</span></div><span class="badge '+(act?'active':'rejected')+'">'+(act?'Tayang':'Arsip')+'</span></div>'+
+  (r.summary?'<div class="meta"><div style="grid-column:1/-1">'+esc(r.summary)+'</div></div>':'')+
+  '<div class="acts"><a class="btn alt" style="min-height:38px;padding:0 12px;text-decoration:none;font-size:14px" href="'+esc(r.file_url)+'" target="_blank" rel="noopener">Buka PDF</a>'+
+  '<button class="btn '+(act?'bad':'ok')+'" style="min-height:38px;padding:0 12px;font-size:14px" data-rep="toggle" data-r="'+esc(r.report_code)+'">'+(act?'Sembunyikan':'Tayangkan')+'</button></div></article>';
+ }).join(''):'<p class="empty">Belum ada data laporan di spreadsheet.</p>';
+ $('list').innerHTML=form+items;
+}
+$('list').addEventListener('submit',function(e){
+ if(e.target.id!=='rfrm')return;
+ e.preventDefault();var b=e.target.querySelector('button');
+ var body={action:'report_add',token:S.token,title:$('rt').value,period:$('rp_p').value,unit:$('ru').value,file_url:$('rurl').value,summary:$('rsum').value};
+ if(!body.title.trim()||!body.period.trim()||!body.file_url.trim()){toast('Judul, periode, dan link PDF wajib diisi.');return}
+ b.disabled=true;
+ call(body).then(function(j){
+  if(j.expired){logout(j.error);return}
+  b.disabled=false;
+  if(!j.ok){toast(j.error||'Gagal menyimpan.');return}
+  toast('Laporan berhasil diterbitkan.');loadR();
+ }).catch(function(){toast('Koneksi gagal.');b.disabled=false});
+});
+$('list').addEventListener('click',function(e){
+ var b=e.target.closest('[data-rep]');if(!b)return;
+ b.disabled=true;
+ call({action:'report_toggle',token:S.token,report_code:b.dataset.r}).then(function(j){
+  if(j.expired){logout(j.error);return}
+  b.disabled=false;
+  if(!j.ok){toast(j.error||'Gagal mengubah status.');return}
+  toast('Status laporan diperbarui.');loadR();
+ }).catch(function(){toast('Koneksi gagal.');b.disabled=false});
+});
+
 if(S.token){show(false);load()}else show(true);
 </script>
 </body>
