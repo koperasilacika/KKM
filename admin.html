@@ -44,10 +44,11 @@ input[type=text],input[type=password],input[type=search]{width:100%;min-height:4
 .acts{display:flex;flex-wrap:wrap;gap:8px}
 .empty{text-align:center;color:var(--mute);padding:40px 0}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--brand);color:#fff;padding:12px 18px;border-radius:10px;display:none;max-width:90%;z-index:20}
+.btn.alt{background:transparent;color:var(--navy)}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}.scroll{overflow-x:auto}
 </style>
 </head>
 <body>
-<header><div class="wrap bar"><span class="lg" role="img" aria-label="Logo koperasi"></span><b>Panel Pengurus<small>Koperasi Konsumen Mandiri</small></b><a class="btn ghost" href="index.html" style="text-decoration:none">Beranda</a><button class="btn ghost" id="out" hidden>Keluar</button></div></header>
+<header><div class="wrap bar"><span class="lg" role="img" aria-label="Logo koperasi"></span><b>Panel Pengurus<small>Koperasi Konsumen Mandiri</small></b><button class="btn ghost" id="out" hidden>Keluar</button></div></header>
 
 <main class="wrap">
  <form class="card" id="login" novalidate>
@@ -59,6 +60,7 @@ input[type=text],input[type=password],input[type=search]{width:100%;min-height:4
  </form>
 
  <section id="app" aria-label="Verifikasi anggota">
+  <div class="tools" id="views" role="group" aria-label="Bagian"><button class="tab" type="button" data-v="members" aria-pressed="true">Anggota</button><button class="tab" type="button" data-v="loans" aria-pressed="false">Pinjaman</button></div>
   <div class="tools" id="tabs" role="group" aria-label="Filter status"></div>
   <div class="tools"><input class="search" id="q" type="search" placeholder="Cari nama, NIK, atau nomor registrasi" aria-label="Cari pendaftar"><button class="btn" id="rf" type="button">Muat ulang</button></div>
   <div id="list" aria-live="polite"></div>
@@ -67,10 +69,10 @@ input[type=text],input[type=password],input[type=search]{width:100%;min-height:4
 <div id="toast" role="status"></div>
 
 <script>
-var API='https://script.google.com/macros/s/AKfycbz44J2qd6vLfqXI1uFjR9W0CUjZ-8_xIXem7UWE4v4u0_nBwiQqsDqlx5r5QCivIT7f/exec';/*  */
+var API='https://script.google.com/macros/s/AKfycbyGcRWCanS0GXF_pfi6H9ANiEyOdVXcoxG96Mfu2kk2VFfkaTCqdim6n4w1inBEqLar/exec';/* tempel URL web app Apps Script (…/exec) di sini */
 var $=function(i){return document.getElementById(i)};
 function ss(k,v){try{if(v===undefined)return sessionStorage.getItem(k)||'';if(v===null)sessionStorage.removeItem(k);else sessionStorage.setItem(k,v)}catch(e){return ''}}
-var S={token:ss('kkm_t'),rows:[],tab:'pending'};
+var S={token:ss('kkm_t'),rows:[],tab:'pending',view:'members',loans:[],inst:[],open:{}};
 var TABS=[['pending','Menunggu'],['active','Aktif'],['rejected','Ditolak'],['all','Semua']];
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function rp(n){return 'Rp '+Math.round(n).toLocaleString('id-ID')}
@@ -92,7 +94,7 @@ $('login').addEventListener('submit',function(e){
   else $('lm').textContent=j.error||'Gagal masuk.';
  }).catch(function(err){$('lm').textContent=err.message||'Koneksi gagal.'}).then(function(){b.disabled=false});
 });
-function load(){
+function loadM(){
  $('list').innerHTML='<p class="empty">Memuat…</p>';
  call({action:'list',token:S.token}).then(function(j){
   if(j.expired){logout(j.error);return}
@@ -101,7 +103,7 @@ function load(){
  }).catch(function(){$('list').innerHTML='<p class="empty">Koneksi gagal. Coba muat ulang.</p>'});
 }
 function count(k){return k==='all'?S.rows.length:S.rows.filter(function(r){return r.status===k}).length}
-function render(){
+function renderM(){
  $('tabs').innerHTML=TABS.map(function(t){return '<button class="tab" type="button" data-t="'+t[0]+'" aria-pressed="'+(S.tab===t[0])+'">'+t[1]+'<span>'+count(t[0])+'</span></button>'}).join('');
  var q=$('q').value.toLowerCase().trim();
  var rows=S.rows.filter(function(r){
@@ -109,7 +111,7 @@ function render(){
  if(!rows.length){$('list').innerHTML='<p class="empty">Tidak ada data.</p>';return}
  var L={pending:'Menunggu',active:'Aktif',rejected:'Ditolak',inactive:'Nonaktif'};
  $('list').innerHTML=rows.map(function(r){
-  var a=r.status==='pending'?'<div class="acts"><button class="btn ok" data-a="approve" data-r="'+esc(r.reg_no)+'">Setujui</button><button class="btn bad" data-a="reject" data-r="'+esc(r.reg_no)+'">Tolak</button></div>':'';
+  var a=r.status==='pending'?'<div class="acts"><button class="btn ok" data-a="approve" data-r="'+esc(r.reg_no)+'">Setujui</button><button class="btn bad" data-a="reject" data-r="'+esc(r.reg_no)+'">Tolak</button></div>':(r.status==='active'&&r.member_code?'<div class="acts"><button class="btn alt" data-l="acct" data-r="'+esc(r.member_code)+'">Buat / reset akun login</button></div>':'');
   return '<article class="item"><div class="top"><div><h3>'+esc(r.full_name)+'</h3><span style="font-size:13px;color:var(--mute)">'+esc(r.reg_no)+(r.member_code?' · '+esc(r.member_code):'')+'</span></div><span class="badge '+esc(r.status)+'">'+esc(L[r.status]||r.status)+'</span></div>'+
   '<div class="meta"><div>NIK<br><b>'+esc(r.nik)+'</b></div><div>HP / WhatsApp<br><b>'+esc(r.phone)+'</b></div><div>Simpanan pokok<br><b>'+rp(r.savings_principal)+'</b></div><div>Mendaftar<br><b>'+dt(r.created_at)+'</b></div>'+
   (r.joined_at?'<div>Bergabung<br><b>'+dt(r.joined_at)+'</b></div>':'')+(r.verified_by?'<div>Diverifikasi oleh<br><b>'+esc(r.verified_by)+'</b></div>':'')+'</div>'+
@@ -129,6 +131,52 @@ $('list').onclick=function(e){
   toast(ap?'Disetujui. Nomor anggota '+j.member_code:'Pendaftar ditolak.');load();
  }).catch(function(){toast('Koneksi gagal.');b.disabled=false});
 };
+
+function render(){S.view==='loans'?renderL():renderM()}
+function load(){S.view==='loans'?loadL():loadM()}
+$('views').onclick=function(e){var b=e.target.closest('[data-v]');if(!b)return;S.view=b.dataset.v;S.tab='pending';$('q').value='';[].forEach.call($('views').children,function(x){x.setAttribute('aria-pressed',x===b)});load()};
+var LT=[['pending','Menunggu'],['approved','Berjalan'],['paid_off','Lunas'],['rejected','Ditolak'],['all','Semua']];
+var LL={pending:'Menunggu',approved:'Berjalan',rejected:'Ditolak',paid_off:'Lunas'},IL={paid:'Lunas',overdue:'Jatuh tempo',unpaid:'Belum bayar'};
+function loadL(){
+ $('list').innerHTML='<p class="empty">Memuat…</p>';
+ call({action:'loans',token:S.token}).then(function(j){
+  if(j.expired){logout(j.error);return}
+  if(!j.ok){$('list').innerHTML='<p class="empty">'+esc(j.error)+'</p>';return}
+  S.loans=j.loans.reverse();S.inst=j.installments;renderL();
+ }).catch(function(){$('list').innerHTML='<p class="empty">Koneksi gagal. Coba muat ulang.</p>'});
+}
+function renderL(){
+ var n=function(k){return k==='all'?S.loans.length:S.loans.filter(function(l){return l.status===k}).length};
+ $('tabs').innerHTML=LT.map(function(t){return '<button class="tab" type="button" data-t="'+t[0]+'" aria-pressed="'+(S.tab===t[0])+'">'+t[1]+'<span>'+n(t[0])+'</span></button>'}).join('');
+ var q=$('q').value.toLowerCase().trim();
+ var rows=S.loans.filter(function(l){return (S.tab==='all'||l.status===S.tab)&&(!q||(l.loan_code+' '+l.name+' '+l.member_code).toLowerCase().indexOf(q)>-1)});
+ if(!rows.length){$('list').innerHTML='<p class="empty">Tidak ada data.</p>';return}
+ $('list').innerHTML=rows.map(function(l){
+  var I=S.inst.filter(function(i){return i.loan_code===l.loan_code}),o=S.open[l.loan_code],c=esc(l.loan_code);
+  var left=I.reduce(function(a,i){return a+(i.status==='paid'?0:i.total_due-i.paid_amount)},0);
+  var acts=l.status==='pending'?'<div class="acts"><button class="btn ok" data-l="lok" data-r="'+c+'">Setujui</button><button class="btn bad" data-l="lno" data-r="'+c+'">Tolak</button></div>':(I.length?'<div class="acts"><button class="btn alt" data-l="open" data-r="'+c+'">'+(o?'Tutup cicilan':'Lihat cicilan')+'</button></div>':'');
+  var tbl=o?'<div class="scroll"><table><thead><tr><th>#</th><th>Jatuh tempo</th><th>Tagihan</th><th>Status</th><th></th></tr></thead><tbody>'+I.map(function(i){
+   return '<tr><td>'+i.installment_no+'</td><td>'+dt(i.due_date)+'</td><td>'+rp(i.total_due)+'</td><td>'+IL[i.status]+'</td><td>'+(i.status!=='paid'&&l.status==='approved'?'<button class="btn ok" style="min-height:36px;padding:0 10px" data-l="pay" data-r="'+c+'" data-n="'+i.installment_no+'">Konfirmasi bayar</button>':'')+'</td></tr>'}).join('')+'</tbody></table></div>':'';
+  return '<article class="item"><div class="top"><div><h3>'+esc(l.name)+'</h3><span style="font-size:13px;color:var(--mute)">'+c+' · '+esc(l.member_code)+'</span></div><span class="badge '+(l.status==='approved'?'active':l.status==='rejected'?'rejected':l.status==='pending'?'pending':'')+'">'+esc(LL[l.status]||l.status)+'</span></div>'+
+  '<div class="meta"><div>Pokok pinjaman<br><b>'+rp(l.amount_requested)+'</b></div><div>Tenor<br><b>'+l.tenor_months+' bulan</b></div><div>Jasa<br><b>'+l.interest_rate_pct+'% / bulan</b></div><div>Diajukan<br><b>'+dt(l.submitted_at)+'</b></div>'+(I.length?'<div>Sisa tagihan<br><b>'+rp(left)+'</b></div>':'')+'</div>'+
+  '<div class="meta"><div style="grid-column:1/-1">Tujuan<br><b>'+esc(l.purpose)+'</b></div></div>'+acts+tbl+'</article>'}).join('');
+}
+$('list').addEventListener('click',function(e){
+ var b=e.target.closest('[data-l]');if(!b)return;var k=b.dataset.l,r=b.dataset.r;
+ if(k==='open'){S.open[r]=!S.open[r];renderL();return}
+ var M={acct:['make_account','Buat password login baru untuk '+r+'? Password lama (jika ada) tidak berlaku lagi.'],lok:['loan_approve','Setujui pinjaman '+r+'? Jadwal cicilan akan dibuat otomatis.'],lno:['loan_reject','Tolak pinjaman '+r+'?'],pay:['pay','Konfirmasi pembayaran cicilan ke-'+b.dataset.n+' untuk '+r+'?']}[k];
+ if(!M||!confirm(M[1]))return;
+ var body={action:M[0],token:S.token};
+ if(k==='acct')body.member_code=r;else{body.loan_code=r;if(k==='pay')body.no=b.dataset.n}
+ b.disabled=true;
+ call(body).then(function(j){
+  if(j.expired){logout(j.error);return}
+  b.disabled=false;
+  if(!j.ok){toast(j.error||'Gagal.');return}
+  if(k==='acct'){prompt('Password awal untuk '+r+'. Salin lalu berikan ke anggota (hanya tampil sekali):',j.password);return}
+  toast('Berhasil.');load();
+ }).catch(function(){toast('Koneksi gagal.');b.disabled=false});
+});
 if(S.token){show(false);load()}else show(true);
 </script>
 </body>
