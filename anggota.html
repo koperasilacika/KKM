@@ -54,7 +54,7 @@ h2{font-size:18px;margin:0 0 12px}
 </style>
 </head>
 <body>
-<header><div class="wrap bar"><span class="lg" role="img" aria-label="Logo koperasi"></span><b>Portal Anggota<small>Koperasi Konsumen Mandiri</small></b><button class="btn ghost" id="out" hidden>Keluar</button></div></header>
+<header><div class="wrap bar"><span class="lg" role="img" aria-label="Logo koperasi"></span><b>Portal Anggota<small>Koperasi Konsumen Mandiri</small></b><a class="btn ghost" href="index.html" style="text-decoration:none">Beranda</a><button class="btn ghost" id="out" hidden>Keluar</button></div></header>
 <main class="wrap">
  <form class="card" id="login" novalidate>
   <h1>Masuk anggota</h1>
@@ -76,7 +76,11 @@ h2{font-size:18px;margin:0 0 12px}
     <button class="btn" style="width:100%" type="submit">Kirim pengajuan</button>
     <div class="msg" id="am" role="status"></div>
    </form>
-   <div><h2>Pinjaman saya</h2><div id="list" aria-live="polite"></div></div>
+   <div>
+    <h2>Pinjaman saya</h2><div id="list" aria-live="polite"></div>
+    <h2 style="margin-top:24px">Laporan usaha (PDF)</h2>
+    <div id="replist" aria-live="polite"><p class="empty">Memuat laporan…</p></div>
+   </div>
   </div>
  </section>
 </main>
@@ -117,7 +121,14 @@ function load(){
    return '<article class="item" style="margin-bottom:12px"><div class="top"><div><h3>'+rp(l.amount_requested)+' · '+l.tenor_months+' bulan</h3><span style="font-size:13px;color:var(--mute)">'+esc(l.loan_code)+'</span></div><span class="badge '+(l.status==='approved'?'active':l.status==='rejected'?'rejected':l.status==='pending'?'pending':'')+'">'+esc(LL[l.status]||l.status)+'</span></div>'+
    '<div class="meta"><div>Tujuan<br><b>'+esc(l.purpose)+'</b></div><div>Diajukan<br><b>'+dt(l.submitted_at)+'</b></div>'+(I.length?'<div>Sisa tagihan<br><b>'+rp(left)+'</b></div>':'')+(nx&&l.status==='approved'?'<div>Cicilan terdekat<br><b>'+rp(nx.total_due)+' · '+dt(nx.due_date)+'</b></div>':'')+'</div>'+
    (I.length?'<details><summary>Jadwal cicilan</summary><div class="scroll"><table><thead><tr><th>#</th><th>Jatuh tempo</th><th>Tagihan</th><th>Status</th></tr></thead><tbody>'+I.map(function(i){return '<tr><td>'+i.installment_no+'</td><td>'+dt(i.due_date)+'</td><td>'+rp(i.total_due)+'</td><td>'+IL[i.status]+'</td></tr>'}).join('')+'</tbody></table></div></details>':'')+'</article>'}).join('');
- }).catch(function(){$('list').innerHTML='<p class="empty">Koneksi gagal. Muat ulang halaman.</p>'});
+  var rl=$('replist');
+  if(rl){
+   var R=(j.reports||[]).slice().reverse();
+   rl.innerHTML=R.length?R.map(function(r){
+    return '<article class="item" style="margin-bottom:10px"><div class="top"><div><h3>'+esc(r.title)+'</h3><span style="font-size:13px;color:var(--mute)">'+esc(r.period)+' · '+esc(r.unit)+'</span></div><a class="btn alt" style="min-height:36px;padding:0 12px;text-decoration:none;font-size:14px" href="'+esc(r.file_url)+'" target="_blank" rel="noopener">Unduh PDF</a></div>'+(r.summary?'<p style="margin:0;font-size:14px;color:var(--mute)">'+esc(r.summary)+'</p>':'')+'</article>';
+   }).join(''):'<p class="empty">Belum ada laporan diterbitkan.</p>';
+  }
+ }).catch(function(){$('list').innerHTML='<p class="empty">Koneksi gagal. Muat ulang halaman.</p>';if($('replist'))$('replist').innerHTML=''});
 }
 function sim(){
  var P=parseInt(($('a').value||'').replace(/\D/g,''),10)||0,n=parseInt($('t').value,10);
