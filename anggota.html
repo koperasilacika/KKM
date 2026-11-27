@@ -16,7 +16,7 @@ body{margin:0;background:var(--surf);color:var(--ink);font:16px/1.55 system-ui,-
 header{background:var(--brand);color:#fff;position:sticky;top:0;z-index:5}
 .bar{display:flex;align-items:center;gap:12px;min-height:60px}
 .lg{width:40px;height:40px;border-radius:50%;background:#fff var(--logo) center/contain no-repeat;flex:none}
-.bar b{flex:1;font-size:16px;line-height:1.2}.bar small{display:block;font-weight:400;opacity:.8;font-size:12px}
+.bar{gap:8px}.bar b{flex:1;font-size:16px;line-height:1.2}.bar small{display:block;font-weight:400;opacity:.8;font-size:12px}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:8px;font:600 15px inherit;font-family:inherit;border:2px solid var(--navy);background:var(--navy);color:var(--on);cursor:pointer}
 .btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
 .btn.bad{background:transparent;border-color:var(--bad);color:var(--bad)}
@@ -52,10 +52,11 @@ select,textarea{width:100%;min-height:44px;padding:10px 12px;border:1px solid va
 details summary{cursor:pointer;font-weight:600;padding:6px 0;min-height:32px}
 h2{font-size:18px;margin:0 0 12px}
 .kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:20px}.kpi{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px}.kpi small{color:var(--mute);display:block;font-size:13px}.kpi b{font-size:19px;display:block;margin-top:4px}.news{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-bottom:24px}.post{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg)}.post img,.post .ph{width:100%;height:110px;object-fit:cover;display:block;background:var(--surf)}.post .b{padding:12px}.post h3{margin:4px 0;font-size:15px}.post a{text-decoration:none;color:inherit}.tag{font-size:11px;font-weight:700;color:var(--navy2);text-transform:uppercase}.btn.alt{background:transparent;color:var(--navy)}
+dialog{border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);padding:20px;max-width:380px;width:calc(100% - 32px)}dialog::backdrop{background:rgba(0,0,0,.55)}dialog h2{margin:0 0 14px;font-size:18px}
 </style>
 </head>
 <body>
-<header><div class="wrap bar"><span class="lg" role="img" aria-label="Logo koperasi"></span><b>Portal Anggota<small>Koperasi Konsumen Mandiri</small></b><button class="btn ghost" id="out" hidden>Keluar</button></div></header>
+<header><div class="wrap bar"><span class="lg" role="img" aria-label="Logo koperasi"></span><b>Portal Anggota<small>Koperasi Konsumen Mandiri</small></b><button class="btn ghost" id="pwb" aria-label="Ganti password" hidden>Password</button><button class="btn ghost" id="out" hidden>Keluar</button></div></header>
 <main class="wrap">
  <form class="card" id="login" novalidate>
   <h1>Masuk anggota</h1>
@@ -86,6 +87,12 @@ h2{font-size:18px;margin:0 0 12px}
   <div id="rl" aria-live="polite"></div>
  </section>
 </main>
+<dialog id="pw" aria-labelledby="pwt"><form id="pwf" novalidate><h2 id="pwt">Ganti password</h2>
+ <div class="f"><label for="pw-o">Password lama</label><input id="pw-o" type="password" autocomplete="current-password"></div>
+ <div class="f"><label for="pw-n">Password baru (minimal 8 karakter)</label><input id="pw-n" type="password" autocomplete="new-password"></div>
+ <div class="f"><label for="pw-c">Ulangi password baru</label><input id="pw-c" type="password" autocomplete="new-password"></div>
+ <div class="acts" style="display:flex;gap:8px"><button class="btn" type="submit">Simpan</button><button class="btn alt" type="button" id="pwc">Batal</button></div>
+ <div class="msg" id="pwm" role="status"></div></form></dialog>
 <div id="toast" role="status"></div>
 <script src="config.js"></script>
 <script>
@@ -98,7 +105,7 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){retur
 function rp(n){return 'Rp '+Math.round(n).toLocaleString('id-ID')}
 function dt(s){if(!s)return '-';var d=new Date(s);return isNaN(d)?s:d.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}
 function call(b){if(!API)return Promise.reject(new Error('API belum diisi di file HTML.'));return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(b)}).then(function(r){return r.json()})}
-function show(l){$('login').style.display=l?'':'none';$('app').style.display=l?'none':'block';$('out').hidden=l}
+function show(l){$('login').style.display=l?'':'none';$('app').style.display=l?'none':'block';$('out').hidden=$('pwb').hidden=l}
 function logout(m){S.token='';ss('kkm_m',null);show(true);if(m)$('lm').textContent=m}
 $('out').onclick=function(){logout()};
 $('login').addEventListener('submit',function(e){
@@ -170,6 +177,20 @@ $('ap').addEventListener('submit',function(e){
   if(j.ok){e.target.reset();sim();m.style.color='var(--ok)';m.textContent='Pengajuan terkirim ('+j.loan_code+'). Menunggu persetujuan pengurus.';load()}
   else{m.style.color='var(--bad)';m.textContent=j.error||'Gagal.'}
  }).catch(function(){m.style.color='var(--bad)';m.textContent='Koneksi gagal.'}).then(function(){b.disabled=false});
+});
+
+$('pwb').onclick=function(){$('pwf').reset();$('pwm').textContent='';$('pw').showModal()};
+$('pwc').onclick=function(){$('pw').close()};
+$('pwf').addEventListener('submit',function(e){
+ e.preventDefault();var o=$('pw-o').value,n=$('pw-n').value,c=$('pw-c').value,m=$('pwm');m.style.color='var(--bad)';
+ if(!o||!n){m.textContent='Isi semua kolom.';return}
+ if(n.length<8){m.textContent='Password baru minimal 8 karakter.';return}
+ if(n!==c){m.textContent='Konfirmasi password tidak sama.';return}
+ var b=e.target.querySelector('button[type=submit]');b.disabled=true;
+ call({action:'change_password',token:S.token,old_password:o,new_password:n}).then(function(j){
+  b.disabled=false;if(j.expired){$('pw').close();logout(j.error);return}
+  if(j.ok){m.style.color='var(--ok)';m.textContent='Password berhasil diganti.';e.target.reset();setTimeout(function(){$('pw').close()},1200)}else m.textContent=j.error||'Gagal.';
+ }).catch(function(){b.disabled=false;m.textContent='Koneksi gagal.'});
 });
 if(S.token){show(false);load()}else show(true);
 </script>
