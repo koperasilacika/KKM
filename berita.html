@@ -31,7 +31,7 @@ main{padding:32px 0 64px}h1{font-size:clamp(26px,5vw,38px);line-height:1.2;margi
 </style>
 </head>
 <body>
-<header><div class="wrap bar"><a href="index.html"><span class="lg" role="img" aria-label="Logo koperasi"></span>Koperasi Konsumen Mandiri</a><a class="back" href="index.html#berita">&larr; Beranda</a></div></header>
+<header><div class="wrap bar"><a href="index.html"><span class="lg" role="img" aria-label="Logo koperasi"></span>Koperasi Konsumen Mandiri</a><a class="back" href="index.html">&larr; Dashboard Utama</a></div></header>
 <main class="wrap" id="m"><p class="empty">Memuat…</p></main>
 <script src="config.js"></script>
 <script>
@@ -45,7 +45,7 @@ else if(slug){
  fetch(API+'?action=news&slug='+encodeURIComponent(slug)).then(function(r){return r.json()}).then(function(j){
   if(!j.ok){$('m').innerHTML='<p class="empty">'+esc(j.error||'Berita tidak ditemukan.')+'</p><p style="text-align:center"><a href="berita.html">Lihat semua berita</a></p>';return}
   var n=j.news;document.title=n.title+' — Koperasi Konsumen Mandiri';
-  $('m').innerHTML='<span class="tag">'+esc(n.category)+'</span><h1>'+esc(n.title)+'</h1><div class="meta">'+dt(n.published_at)+'</div>'+(n.image_id?'<img class="hero" alt="Foto kegiatan: '+esc(n.title)+'" src="'+img(n.image_id,1200)+'">':'')+'<div class="body">'+String(n.content).split(/\n\s*\n/).map(function(p){return '<p>'+esc(p).replace(/\n/g,'<br>')+'</p>'}).join('')+'</div><p><a href="berita.html">&larr; Kembali ke daftar berita</a></p>';
+  $('m').innerHTML='<span class="tag">'+esc(n.category)+'</span><h1>'+esc(n.title)+'</h1><div class="meta">'+dt(n.published_at)+'</div>'+(n.image_id?'<img class="hero" alt="Foto kegiatan: '+esc(n.title)+'" src="'+img(n.image_id,1200)+'">':'')+'<div class="body">'+String(n.content).split(/\n\s*\n/).map(function(p){return '<p>'+esc(p).replace(/\n/g,'<br>')+'</p>'}).join('')+'</div><p style="display:flex;gap:16px;flex-wrap:wrap"><a href="berita.html">&larr; Kembali ke daftar berita</a><a href="index.html">&larr; Dashboard Utama</a></p>';
  }).catch(function(){$('m').innerHTML='<p class="empty">Koneksi gagal. Coba muat ulang.</p>'});
 }else{
  fetch(API+'?action=public').then(function(r){return r.json()}).then(function(j){
