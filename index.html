@@ -24,7 +24,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:va
 .bar{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
 .brand{font-weight:700;text-decoration:none;color:var(--navy);display:flex;align-items:center;gap:10px;letter-spacing:-.01em}
 .lg{width:44px;height:44px;flex:none;border-radius:50%;background:#fff var(--logo) center/contain no-repeat;box-shadow:0 0 0 1px var(--line)}.lg.big{width:104px;height:104px;margin:0 0 16px;box-shadow:none}.lg.mid{width:64px;height:64px;box-shadow:none}
-nav ul{display:none;list-style:none;margin:0;padding:0;gap:22px}
+nav ul{display:none;list-style:none;margin:0;padding:0;gap:18px}
 nav a{text-decoration:none;font-size:15px;color:var(--mute)}nav a:hover{color:var(--ink)}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border-radius:8px;font-weight:600;text-decoration:none;border:2px solid var(--navy);background:var(--navy);color:var(--on);cursor:pointer;font-size:16px;font-family:inherit}
 .btn.ghost{background:transparent;color:var(--navy)}
@@ -54,14 +54,16 @@ h2.t{font-size:clamp(26px,4vw,36px);line-height:1.15;margin:0 0 12px;letter-spac
 .unit{display:grid;gap:6px;padding:20px 0;border-bottom:1px solid var(--line)}
 .unit .n{font-weight:800;color:var(--navy2);font-size:14px}
 .unit h3{margin:0;font-size:20px}.unit p{margin:0;color:var(--mute)}
-.two{display:grid;gap:32px}
+.two{display:grid;gap:24px}
 .card{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:22px}
 .card h3{margin:0 0 10px;font-size:18px}
 .card ul{margin:0;padding-left:20px;color:var(--mute)}
 table{width:100%;border-collapse:collapse;font-size:15px}
-th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
 th{color:var(--mute);font-weight:600;font-size:13px}
 .scroll{overflow-x:auto}
+.org-list{margin:0;padding-left:18px;color:var(--ink)}
+.org-list li{margin-bottom:2px}
 .news{display:grid;gap:16px}
 .post{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg)}
 .ph{height:120px;background:repeating-linear-gradient(135deg,var(--surf),var(--surf) 10px,var(--line) 10px,var(--line) 11px);display:grid;place-items:center;color:var(--mute);font-size:13px}
@@ -78,10 +80,14 @@ input,select,textarea{width:100%;min-height:44px;padding:10px 12px;border:1px so
 .steps li{counter-increment:s;padding:10px 0 10px 40px;position:relative;border-bottom:1px solid var(--line)}
 .steps li::before{content:counter(s);position:absolute;left:0;top:10px;width:28px;height:28px;border-radius:50%;background:var(--acc);color:#0b2447;display:grid;place-items:center;font-size:14px;font-weight:700}
 .ok{color:var(--ok);font-weight:600}
-.lock{display:flex;gap:10px;align-items:center;color:var(--mute);font-size:14px;margin-top:14px}
+.lock-banner{margin-top:18px;padding:16px 20px;border-radius:12px;background:linear-gradient(135deg,rgba(11,36,71,.06),rgba(42,90,168,.09));border:1px solid var(--line);border-left:4px solid var(--acc);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+.lock-info{display:flex;align-items:center;gap:14px;flex:1;min-width:240px}
+.lock-ico{width:40px;height:40px;border-radius:10px;background:var(--brand);color:var(--acc);display:grid;place-items:center;flex:none}
+.lock-text strong{display:block;font-size:15px;color:var(--ink);margin-bottom:2px}
+.lock-text span{display:block;font-size:13px;color:var(--mute);line-height:1.45}
 footer{background:var(--brand);color:var(--on);padding:40px 0}
 footer .wrap{display:grid;gap:12px;font-size:14px}footer a{color:var(--acc)}
-@media (min-width:760px){
+@media (min-width:860px){
 nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
 .hero .wrap{grid-template-columns:1.3fr .9fr;align-items:center}
 .unit{grid-template-columns:60px 1fr 1.4fr;align-items:baseline}
@@ -103,7 +109,7 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
   <a class="btn" href="#anggota" style="min-height:40px;padding:0 14px;font-size:14px">Daftar</a>
  </div>
  <div id="mnav">
-  <a href="#usaha">Usaha</a><a href="#profil">Profil</a><a href="#berita">Berita</a><a href="#anggota">Anggota</a><a href="#pinjam">Simpan Pinjam</a><a href="#laporan">Laporan Usaha</a><a href="anggota.html">Masuk Anggota</a><a href="admin.html">Login Pengurus</a>
+  <a href="#usaha">Usaha</a><a href="#profil">Profil</a><a href="#berita">Berita</a><a href="#anggota">Anggota</a><a href="#pinjam">Simpan Pinjam</a><a href="#laporan">Laporan Usaha</a><a href="anggota.html">Login Anggota</a><a href="admin.html">Login Pengurus</a>
  </div>
 </header>
 
@@ -144,18 +150,53 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
  <div class="wrap">
   <h2 class="t">Profil koperasi</h2>
   <p class="sub" id="pad">Jln. Cilampayan, Desa Pasirtanjung, Cikarang Pusat, Kabupaten Bekasi.</p>
-  <div class="two">
-   <div class="card"><h3>Visi</h3><p id="pv" style="color:var(--mute);margin:0 0 18px">Koperasi yang mandiri dan menyejahterakan anggotanya.</p>
-    <h3>Misi</h3><ul id="pm"><li>Melayani kebutuhan harian anda dengan barang dan makanan yang terjangkau.</li><li>Menjalankan simpan pinjam yang sehat dan transparan.</li><li>Melaporkan kinerja usaha secara berkala kepada anggota.</li></ul>
+  <div class="card" style="margin-bottom:24px">
+   <div class="two">
+    <div>
+     <h3>Visi</h3>
+     <p id="pv" style="color:var(--mute);margin:0">Koperasi yang mandiri dan menyejahterakan anggotanya.</p>
     </div>
-   <div class="card"><h3>Pengurus & pengawas</h3>
-    <div class="scroll"><table><thead><tr><th>Jabatan</th><th>Nama</th></tr></thead><tbody id="po">
-     <tr><td>Ketua</td><td>Ridho Cahyono</td></tr>
-     <tr><td>Sekretaris</td><td>Pandji Kusumo Pradigyo</td></tr>
-     <tr><td>Bendahara</td><td>Yana Mulyana</td></tr>
-     <tr><td>Badan Pengawas</td><td>Eko Adi Prasetio</td></tr>
-    </tbody></table></div>
-    <p class="note" id="pi" style="color:var(--mute);opacity:1">Nomor badan hukum & jam operasional: [isi]</p></div>
+    <div>
+     <h3>Misi</h3>
+     <ul id="pm">
+      <li>Melayani kebutuhan harian anda dengan barang dan makanan yang terjangkau.</li>
+      <li>Menjalankan simpan pinjam yang sehat dan transparan.</li>
+      <li>Melaporkan kinerja usaha secara berkala kepada anggota.</li>
+     </ul>
+    </div>
+   </div>
+   <p class="note" id="pi" style="color:var(--mute);opacity:1;border-top:1px solid var(--line);padding-top:12px;margin-top:16px">Nomor badan hukum & jam operasional: [isi]</p>
+  </div>
+
+  <div class="two">
+   <div class="card">
+    <h3>Susunan Pengurus</h3>
+    <div class="scroll">
+     <table>
+      <thead><tr><th style="width:45%">Jabatan</th><th>Nama</th></tr></thead>
+      <tbody id="po-pengurus">
+       <tr><td>Ketua</td><td>Rido Cahyono</td></tr>
+       <tr><td>Sekretaris</td><td>Pandji Kusumo Pradigyo</td></tr>
+       <tr><td>Bendahara Umum</td><td>Yana Mulyana</td></tr>
+       <tr><td>Bendahara Simpan Pinjam</td><td>Rian Barli</td></tr>
+       <tr><td>Seksi Usaha</td><td><ul class="org-list"><li>Jaka Ariansyah</li><li>Abdul Rovi</li></ul></td></tr>
+      </tbody>
+     </table>
+    </div>
+   </div>
+
+   <div class="card">
+    <h3>Badan Pengawas</h3>
+    <div class="scroll">
+     <table>
+      <thead><tr><th style="width:45%">Jabatan</th><th>Nama</th></tr></thead>
+      <tbody id="po-pengawas">
+       <tr><td>Ketua Pengawas</td><td>Eko Adi Prasetio</td></tr>
+       <tr><td>Anggota Pengawas</td><td><ul class="org-list"><li>Niken</li><li>Sukma Gagah Irawan</li><li>Damaiyanto</li><li>Subud Pramuditya</li></ul></td></tr>
+      </tbody>
+     </table>
+    </div>
+   </div>
   </div>
  </div>
 </section>
@@ -218,7 +259,18 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
   <h2 class="t">Laporan usaha</h2>
   <p class="sub">Pertanggungjawaban pengurus per periode: barang & makanan kemasan, makanan jadi, dan rekap konsolidasi.</p>
   <div class="card scroll"><table><thead><tr><th>Laporan</th><th>Periode</th><th>Unit</th><th></th></tr></thead><tbody id="rl"><tr><td colspan="4">Daftar laporan tampil setelah sistem terhubung.</td></tr></tbody></table></div>
-  <p class="lock">🔒 Berkas PDF hanya dapat diunduh anggota yang sudah login.</p>
+  <div class="lock-banner" role="note">
+   <div class="lock-info">
+    <div class="lock-ico" aria-hidden="true">
+     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    </div>
+    <div class="lock-text">
+     <strong>Akses Dokumen Terbatas untuk Anggota</strong>
+     <span>Demi transparansi dan keamanan internal koperasi, berkas lengkap (PDF) hanya dapat diunduh setelah masuk menggunakan akun anggota aktif.</span>
+    </div>
+   </div>
+   <a class="btn" href="anggota.html" style="min-height:40px;padding:0 16px;font-size:14px">Masuk Portal Anggota</a>
+  </div>
  </div>
 </section>
 
@@ -226,12 +278,17 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
  <div class="wrap two">
   <div>
    <h2 class="t">Portal anggota & pengurus</h2>
-   <p class="sub">Setelah login, halaman utama menampilkan ringkasan sesuai peran.</p>
+   <p class="sub">Masuk sesuai peran Anda untuk mengakses layanan simpan pinjam, unduhan laporan PDF, atau administrasi koperasi.</p>
   </div>
   <div class="card">
    <h3>Anggota</h3><ul><li>Saldo simpanan pokok, wajib, dan sukarela</li><li>Sisa tagihan dan cicilan terdekat</li><li>Berita terbaru dan unduhan laporan</li></ul>
-   <h3 style="margin-top:18px">Pengurus</h3><ul><li>Antrean pendaftar dan pengajuan pinjaman</li><li>Omzet usaha bulan terakhir</li><li>Log aktivitas dan persetujuan cepat</li></ul>
-   
+   <p style="margin:14px 0 0"><a class="btn" href="anggota.html">Login Anggota</a></p>
+   <h3 style="margin-top:22px">Pengurus</h3><ul><li>Antrean pendaftar dan pengajuan pinjaman</li><li>Omzet usaha bulan terakhir</li><li>Log aktivitas dan persetujuan cepat</li></ul>
+   <p style="margin:14px 0 0"><a class="btn ghost" href="admin.html">Login Pengurus</a></p>
+  </div>
+ </div>
+</section>
+</main>
 
 <footer>
  <div class="wrap">
@@ -239,7 +296,7 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
   <strong>Koperasi Konsumen Mandiri</strong>
   <span>Jln. Cilampayan, Desa Pasirtanjung, Cikarang Pusat, Kabupaten Bekasi</span>
   <span id="fk">Kontak & jam operasional: [isi]</span>
-  <span><a href="admin.html">Login pengurus</a></span>
+  <span><a href="anggota.html">Portal Anggota</a> · <a href="admin.html">Portal Pengurus</a></span>
  </div>
 </footer>
 
@@ -292,8 +349,12 @@ if(API){fetch(API+'?action=public').then(function(r){return r.json()}).then(func
  var info=[p.legal_number?'Badan hukum: '+p.legal_number:'',p.hours?'Jam operasional: '+p.hours:'',p.contact?'Kontak: '+p.contact:''].filter(Boolean);
  if(info.length){$('pi').textContent=info.join(' · ');$('fk').textContent=[p.hours,p.contact].filter(Boolean).join(' · ')}
  var org=j.org||[];
- if(org.length){var g=function(t){return org.filter(function(o){return o.group_type===t})},row=function(o){return '<tr><td>'+esc(o.position)+(o.period_label?'<br><small style="color:var(--mute)">'+esc(o.period_label)+'</small>':'')+'</td><td>'+esc(o.full_name)+'</td></tr>'};
-  $('po').innerHTML=g('pengurus').map(row).join('')+(g('pengawas').length?'<tr><th colspan="2">Badan Pengawas</th></tr>'+g('pengawas').map(row).join(''):'')}
+ if(org.length){
+  var g=function(t){return org.filter(function(o){return o.group_type===t})};
+  var row=function(o){return '<tr><td>'+esc(o.position)+(o.period_label?'<br><small style="color:var(--mute)">'+esc(o.period_label)+'</small>':'')+'</td><td>'+esc(o.full_name)+'</td></tr>'};
+  if(g('pengurus').length)$('po-pengurus').innerHTML=g('pengurus').map(row).join('');
+  if(g('pengawas').length)$('po-pengawas').innerHTML=g('pengawas').map(row).join('');
+ }
  $('nl').innerHTML=j.news.length?j.news.slice(0,3).map(function(n){return '<article class="post"><div class="ph">'+(n.image_id?'<img loading="lazy" alt="" src="https://drive.google.com/thumbnail?id='+n.image_id+'&sz=w600">':'Foto kegiatan')+'</div><div class="b"><span class="tag">'+esc(n.category)+'</span><h3><a href="berita.html?slug='+encodeURIComponent(n.slug)+'">'+esc(n.title)+'</a></h3><p>'+esc(n.excerpt)+'</p></div></article>'}).join(''):'<p class="sub">Belum ada berita.</p>';
  $('rl').innerHTML=j.reports.length?j.reports.slice(0,6).map(function(r){return '<tr><td>'+esc(r.title)+'</td><td>'+esc(r.period_label)+'</td><td>'+esc(UN[r.business_unit]||r.business_unit)+'</td><td><a href="anggota.html">Masuk untuk unduh</a></td></tr>'}).join(''):'<tr><td colspan="4">Belum ada laporan.</td></tr>';
 }).catch(function(){})}
