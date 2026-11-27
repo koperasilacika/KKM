@@ -14,14 +14,15 @@ body{margin:0;background:var(--surf);color:var(--ink);font:16px/1.55 system-ui,-
 :focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 .wrap{max-width:980px;margin:0 auto;padding:0 16px}
 header{background:var(--brand);color:#fff;position:sticky;top:0;z-index:5}
-.bar{display:flex;align-items:center;gap:12px;min-height:60px}
+.bar{display:flex;align-items:center;gap:8px;min-height:60px;flex-wrap:wrap;padding:6px 0}
 .lg{width:40px;height:40px;border-radius:50%;background:#fff var(--logo) center/contain no-repeat;flex:none}
-.bar{gap:8px}.bar b{flex:1;font-size:16px;line-height:1.2}.bar small{display:block;font-weight:400;opacity:.8;font-size:12px}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:8px;font:600 15px inherit;font-family:inherit;border:2px solid var(--navy);background:var(--navy);color:var(--on);cursor:pointer}
+.bar b{flex:1;font-size:16px;line-height:1.2;min-width:140px}.bar small{display:block;font-weight:400;opacity:.8;font-size:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:8px;font:600 15px inherit;font-family:inherit;border:2px solid var(--navy);background:var(--navy);color:var(--on);cursor:pointer;text-decoration:none}
 .btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
 .btn.bad{background:transparent;border-color:var(--bad);color:var(--bad)}
-.btn.ghost{background:transparent;border-color:rgba(255,255,255,.6);color:#fff;min-height:40px;padding:0 14px}
+.btn.ghost{background:transparent;border-color:rgba(255,255,255,.6);color:#fff;min-height:38px;padding:0 12px;font-size:14px}
 .btn:disabled{opacity:.55;cursor:not-allowed}
+[hidden]{display:none!important}
 .card{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:20px}
 label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
 input[type=text],input[type=password],input[type=search]{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
@@ -45,12 +46,13 @@ input[type=text],input[type=password],input[type=search]{width:100%;min-height:4
 .empty{text-align:center;color:var(--mute);padding:40px 0}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--brand);color:#fff;padding:12px 18px;border-radius:10px;display:none;max-width:90%;z-index:20}
 .btn.alt{background:transparent;color:var(--navy)}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}.scroll{overflow-x:auto}
-.btn.alt{background:transparent;color:var(--navy)}select,textarea{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:16px}.kpi{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px}.kpi small{color:var(--mute);display:block;font-size:13px}.kpi b{font-size:20px;display:block;margin-top:4px}.thumb{width:72px;height:56px;border-radius:8px;object-fit:cover;background:var(--surf);flex:none}.row{display:flex;gap:12px;align-items:flex-start}.orow{display:grid;gap:8px;grid-template-columns:1fr 1fr;padding:10px 0;border-bottom:1px solid var(--line)}@media(min-width:700px){.orow{grid-template-columns:1.4fr 1fr 1fr 1fr auto}}
+select,textarea{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:16px}.kpi{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px}.kpi small{color:var(--mute);display:block;font-size:13px}.kpi b{font-size:20px;display:block;margin-top:4px}.thumb{width:72px;height:56px;border-radius:8px;object-fit:cover;background:var(--surf);flex:none}.row{display:flex;gap:12px;align-items:flex-start}.orow{display:grid;gap:8px;grid-template-columns:1fr 1fr;padding:10px 0;border-bottom:1px solid var(--line)}@media(min-width:700px){.orow{grid-template-columns:1.4fr 1fr 1fr 1fr auto}}
+.helper-note{font-size:13px;color:var(--mute);background:var(--surf);padding:10px 12px;border-radius:8px;border-left:3px solid var(--acc);margin:14px 0 0;line-height:1.45}
 dialog{border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);padding:20px;max-width:380px;width:calc(100% - 32px)}dialog::backdrop{background:rgba(0,0,0,.55)}dialog h2{margin:0 0 14px;font-size:18px}
 </style>
 </head>
 <body>
-<header><div class="wrap bar"><span class="lg" role="img" aria-label="Logo koperasi"></span><b>Panel Pengurus<small>Koperasi Konsumen Mandiri</small></b><button class="btn ghost" id="pwb" aria-label="Ganti password" hidden>Password</button><button class="btn ghost" id="out" hidden>Keluar</button></div></header>
+<header><div class="wrap bar"><a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;flex:1"><span class="lg" role="img" aria-label="Logo koperasi"></span><b>Panel Pengurus<small>Koperasi Konsumen Mandiri</small></b></a><a class="btn ghost" href="index.html">&larr; Dashboard Utama</a><button class="btn ghost" id="pwb" aria-label="Ganti password" hidden>Ganti Password</button><button class="btn ghost" id="out" hidden>Keluar</button></div></header>
 
 <main class="wrap">
  <form class="card" id="login" novalidate>
@@ -59,9 +61,16 @@ dialog{border:1px solid var(--line);border-radius:12px;background:var(--bg);colo
   <div class="f"><label for="p">Password</label><input id="p" type="password" autocomplete="current-password" required></div>
   <button class="btn" style="width:100%" type="submit">Masuk</button>
   <div class="msg" id="lm" role="alert"></div>
+  <div class="helper-note">
+   <strong>Lupa password?</strong> Segera hubungi Ketua atau Sekretaris Pengurus Koperasi untuk reset kredensial akun Anda.
+  </div>
  </form>
 
  <section id="app" aria-label="Verifikasi anggota">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px">
+   <span style="font-size:14px;color:var(--mute)">Panel Administrasi & Pengelolaan Koperasi</span>
+   <a href="index.html" style="font-size:14px;color:var(--navy2);font-weight:600;text-decoration:none">&larr; Kembali ke Beranda Utama</a>
+  </div>
   <div class="tools" id="views" role="group" aria-label="Bagian"><button class="tab" type="button" data-v="dash" aria-pressed="true">Dashboard</button><button class="tab" type="button" data-v="members" aria-pressed="false">Anggota</button><button class="tab" type="button" data-v="loans" aria-pressed="false">Pinjaman</button><button class="tab" type="button" data-v="news" aria-pressed="false">Berita</button><button class="tab" type="button" data-v="reports" aria-pressed="false">Laporan</button><button class="tab" type="button" data-v="profile" aria-pressed="false">Profil</button></div>
   <div class="tools" id="tabs" role="group" aria-label="Filter status"></div>
   <div class="tools" id="stools"><input class="search" id="q" type="search" placeholder="Cari nama, NIK, atau nomor registrasi" aria-label="Cari pendaftar"><button class="btn" id="rf" type="button">Muat ulang</button></div>
@@ -73,7 +82,9 @@ dialog{border:1px solid var(--line);border-radius:12px;background:var(--bg);colo
  <div class="f"><label for="pw-n">Password baru (minimal 8 karakter)</label><input id="pw-n" type="password" autocomplete="new-password"></div>
  <div class="f"><label for="pw-c">Ulangi password baru</label><input id="pw-c" type="password" autocomplete="new-password"></div>
  <div class="acts" style="display:flex;gap:8px"><button class="btn" type="submit">Simpan</button><button class="btn alt" type="button" id="pwc">Batal</button></div>
- <div class="msg" id="pwm" role="status"></div></form></dialog>
+ <div class="msg" id="pwm" role="status"></div>
+ <div class="helper-note" style="margin-top:10px">Lupa password lama? Segera hubungi Pengurus Koperasi (admin sistem) untuk pembuatan ulang password.</div>
+</form></dialog>
 <div id="toast" role="status"></div>
 
 <script src="config.js"></script>
@@ -91,7 +102,7 @@ function call(body){
  if(!API)return Promise.reject(new Error('API belum diisi di file HTML.'));
  return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)}).then(function(r){return r.json()});
 }
-function show(login){$('login').style.display=login?'':'none';$('app').style.display=login?'none':'block';$('out').hidden=$('pwb').hidden=login}
+function show(login){$('login').style.display=login?'':'none';$('app').style.display=login?'none':'block';$('out').hidden=login;$('pwb').hidden=login}
 function logout(msg){S.token='';ss('kkm_t',null);show(true);if(msg)$('lm').textContent=msg}
 $('out').onclick=function(){logout()};
 $('login').addEventListener('submit',function(e){
@@ -204,7 +215,6 @@ function download(code,b){
   var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([u],{type:'application/pdf'}));a.download=j.name;document.body.appendChild(a);a.click();a.remove();
  }).catch(function(){if(b)b.disabled=false;toast('Koneksi gagal.')});
 }
-/* ---- Dashboard ---- */
 function loadD(){
  $('list').innerHTML='<p class="empty">Memuat…</p>';
  call({action:'dash',token:S.token}).then(function(j){
@@ -213,7 +223,6 @@ function loadD(){
   $('list').innerHTML='<div class="kpis">'+K.map(function(k){return '<div class="kpi"><small>'+k[0]+'</small><b>'+k[1]+'</b></div>'}).join('')+'</div><div class="card"><h3 style="margin:0 0 8px">Aktivitas terbaru</h3>'+(j.logs.length?j.logs.map(function(l){return '<div style="padding:8px 0;border-top:1px solid var(--line);font-size:14px"><b>'+esc(l.user)+'</b> · '+esc(l.desc)+'<br><span style="color:var(--mute);font-size:12px">'+dt(l.at)+'</span></div>'}).join(''):'<p class="empty">Belum ada aktivitas.</p>')+'</div>';
  }).catch(fail);
 }
-/* ---- Berita ---- */
 function loadN(){
  $('list').innerHTML='<p class="empty">Memuat…</p>';
  call({action:'news_list',token:S.token}).then(function(j){if(!guard(j))return;S.news=j.news;S.nedit=null;renderN()}).catch(fail);
@@ -229,7 +238,6 @@ function renderN(){
  var f=S.nedit?newsForm(S.nedit):'<p style="margin:0 0 16px"><button class="btn" data-n="new">+ Tulis berita baru</button></p>';
  $('list').innerHTML=f+(S.news.length?S.news.map(function(n){return '<article class="item"><div class="row">'+(n.image_id?'<img class="thumb" alt="" src="'+img(n.image_id,200)+'">':'<div class="thumb"></div>')+'<div style="flex:1"><h3>'+esc(n.title)+'</h3><span style="font-size:13px;color:var(--mute)">'+esc(n.category)+' · '+dt(n.published_at)+'</span></div></div><div class="acts"><button class="btn alt" data-n="edit" data-r="'+esc(n.id)+'">Edit</button><button class="btn bad" data-n="del" data-r="'+esc(n.id)+'">Hapus</button></div></article>'}).join(''):'<p class="empty">Belum ada berita.</p>');
 }
-/* ---- Laporan ---- */
 function loadR(){
  $('list').innerHTML='<p class="empty">Memuat…</p>';
  call({action:'reports',token:S.token}).then(function(j){if(!guard(j))return;S.reps=j.reports;renderR()}).catch(fail);
@@ -241,7 +249,6 @@ function renderR(){
  '<div class="f"><label for="rp-f">Berkas PDF (maks. 10 MB)</label><input id="rp-f" type="file" accept="application/pdf"></div><button class="btn" type="submit">Unggah</button><div class="msg" id="rp-m" role="status"></div></form>';
  $('list').innerHTML=f+(S.reps.length?S.reps.map(function(r){return '<article class="item"><div class="top"><div><h3>'+esc(r.title)+'</h3><span style="font-size:13px;color:var(--mute)">'+esc(r.period_label)+' · '+esc(UN[r.business_unit]||r.business_unit)+' · '+dt(r.published_at)+' · '+r.file_size_kb+' KB</span></div></div><div class="meta"><div>Omzet kemasan<br><b>'+rp(r.packaged_goods_sales)+'</b></div><div>Omzet makanan jadi<br><b>'+rp(r.ready_meals_sales)+'</b></div></div>'+(r.summary?'<div style="font-size:14px;color:var(--mute)">'+esc(r.summary)+'</div>':'')+'<div class="acts"><button class="btn alt" data-p="dl" data-r="'+esc(r.report_code)+'">Unduh PDF</button><button class="btn bad" data-p="del" data-r="'+esc(r.report_code)+'">Hapus</button></div></article>'}).join(''):'<p class="empty">Belum ada laporan.</p>');
 }
-/* ---- Profil ---- */
 function orow(o){o=o||{};return '<div class="orow"><input type="text" placeholder="Nama lengkap" value="'+esc(o.full_name)+'" aria-label="Nama"><input type="text" placeholder="Jabatan" value="'+esc(o.position)+'" aria-label="Jabatan"><select aria-label="Kelompok"><option value="pengurus"'+(o.group_type==='pengawas'?'':' selected')+'>Pengurus</option><option value="pengawas"'+(o.group_type==='pengawas'?' selected':'')+'>Pengawas</option></select><input type="text" placeholder="Periode (2026–2029)" value="'+esc(o.period_label)+'" aria-label="Periode"><button class="btn bad" type="button" data-o="rm" style="min-height:44px;padding:0 12px">Hapus</button></div>'}
 function loadP(){
  $('list').innerHTML='<p class="empty">Memuat…</p>';
@@ -252,7 +259,6 @@ function loadP(){
   '<h3 style="margin:18px 0 6px">Pengurus & pengawas</h3><div id="orgs">'+(j.org||[]).map(orow).join('')+'</div><p><button class="btn alt" type="button" data-o="add">+ Tambah baris</button></p><button class="btn" type="submit">Simpan profil</button><div class="msg" id="pf-m" role="status"></div></form>';
  }).catch(fail);
 }
-/* ---- Aksi berita, laporan, profil ---- */
 function say(id,t,ok){var m=$(id);m.style.color=ok?'var(--ok)':'var(--bad)';m.textContent=t}
 $('list').addEventListener('click',function(e){
  var b=e.target.closest('[data-n],[data-p],[data-o]');if(!b)return;
