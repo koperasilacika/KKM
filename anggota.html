@@ -26,6 +26,10 @@ header{background:var(--brand);color:#fff;position:sticky;top:0;z-index:5}
 .card{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:20px}
 label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
 input[type=text],input[type=password],input[type=search]{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+.pw-wrap{position:relative;display:flex;align-items:center}
+.pw-wrap input{padding-right:44px}
+.pw-eye{position:absolute;right:6px;background:none;border:0;color:var(--mute);cursor:pointer;width:36px;height:36px;display:grid;place-items:center;border-radius:6px;font-size:16px}
+.pw-eye:hover{color:var(--ink);background:var(--surf)}
 #login{max-width:380px;margin:56px auto}
 #login h1{font-size:22px;margin:0 0 16px}.f{margin-bottom:14px}
 .msg{min-height:20px;font-size:14px;margin-top:10px;color:var(--bad)}
@@ -58,7 +62,7 @@ dialog{border:1px solid var(--line);border-radius:12px;background:var(--bg);colo
  <form class="card" id="login" novalidate>
   <h1>Masuk anggota</h1>
   <div class="f"><label for="c">Nomor anggota</label><input id="c" type="text" placeholder="contoh: KKM001" autocapitalize="characters" autocomplete="username" required></div>
-  <div class="f"><label for="p">Password</label><input id="p" type="password" autocomplete="current-password" required></div>
+  <div class="f"><label for="p">Password</label><div class="pw-wrap"><input id="p" type="password" autocomplete="current-password" required><button type="button" class="pw-eye" data-eye="p" aria-label="Tampilkan password">👁</button></div></div>
   <button class="btn" style="width:100%" type="submit">Masuk</button>
   <div class="msg" id="lm" role="alert"></div>
   <div class="helper-note">
@@ -74,9 +78,9 @@ dialog{border:1px solid var(--line);border-radius:12px;background:var(--bg);colo
   <div class="grid">
    <form class="card" id="ap" novalidate>
     <h2>Ajukan pinjaman</h2>
-    <div class="f"><label for="a">Nominal pinjaman (Rp)</label><input id="a" type="text" inputmode="numeric" placeholder="contoh: 5000000"></div>
+    <div class="f"><label for="a">Nominal pinjaman (Rp)</label><input id="a" type="text" inputmode="numeric" placeholder="contoh: 5.000.000"></div>
     <div class="f"><label for="t">Tenor</label><select id="t"><option>3</option><option>6</option><option selected>12</option><option>24</option></select></div>
-    <div class="f"><label for="pu">Tujuan pinjaman</label><textarea id="pu" rows="2" maxlength="255"></textarea></div>
+    <div class="f"><label for="pu">Tujuan pinjaman</label><textarea id="pu" rows="2" maxlength="255" placeholder="contoh: Kebutuhan pendidikan / renovasi rumah"></textarea></div>
     <div class="res" aria-live="polite">Estimasi cicilan per bulan<br><b id="sim">—</b><br><small id="st" style="color:var(--mute)"></small></div>
     <button class="btn" style="width:100%" type="submit">Kirim pengajuan</button>
     <div class="msg" id="am" role="status"></div>
@@ -90,9 +94,9 @@ dialog{border:1px solid var(--line);border-radius:12px;background:var(--bg);colo
  </section>
 </main>
 <dialog id="pw" aria-labelledby="pwt"><form id="pwf" novalidate><h2 id="pwt">Ganti password</h2>
- <div class="f"><label for="pw-o">Password lama</label><input id="pw-o" type="password" autocomplete="current-password"></div>
- <div class="f"><label for="pw-n">Password baru (minimal 8 karakter)</label><input id="pw-n" type="password" autocomplete="new-password"></div>
- <div class="f"><label for="pw-c">Ulangi password baru</label><input id="pw-c" type="password" autocomplete="new-password"></div>
+ <div class="f"><label for="pw-o">Password lama</label><div class="pw-wrap"><input id="pw-o" type="password" autocomplete="current-password"><button type="button" class="pw-eye" data-eye="pw-o" aria-label="Tampilkan password lama">👁</button></div></div>
+ <div class="f"><label for="pw-n">Password baru (minimal 8 karakter)</label><div class="pw-wrap"><input id="pw-n" type="password" autocomplete="new-password"><button type="button" class="pw-eye" data-eye="pw-n" aria-label="Tampilkan password baru">👁</button></div></div>
+ <div class="f"><label for="pw-c">Ulangi password baru</label><div class="pw-wrap"><input id="pw-c" type="password" autocomplete="new-password"><button type="button" class="pw-eye" data-eye="pw-c" aria-label="Tampilkan konfirmasi password">👁</button></div></div>
  <div class="acts" style="display:flex;gap:8px"><button class="btn" type="submit">Simpan</button><button class="btn alt" type="button" id="pwc">Batal</button></div>
  <div class="msg" id="pwm" role="status"></div>
  <div class="helper-note" style="margin-top:10px">Lupa password lama? Segera hubungi Pengurus Koperasi untuk reset password.</div>
@@ -108,12 +112,16 @@ var S={token:ss('kkm_m')};
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function rp(n){return 'Rp '+Math.round(n).toLocaleString('id-ID')}
 function dt(s){if(!s)return '-';var d=new Date(s);return isNaN(d)?s:d.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}
-function call(b){if(!API)return Promise.reject(new Error('API belum diisi di file HTML.'));return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(b)}).then(function(r){return r.json()})}
+function call(b){if(!API)return Promise.reject(new Error('API belum diisi di config.js.'));return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(b)}).then(function(r){return r.json()})}
+document.addEventListener('click',function(e){
+ var eye=e.target.closest('[data-eye]');
+ if(eye){var inp=$(eye.dataset.eye);if(inp)inp.type=inp.type==='password'?'text':'password'}
+});
 function show(l){$('login').style.display=l?'':'none';$('app').style.display=l?'none':'block';$('out').hidden=l;$('pwb').hidden=l}
 function logout(m){S.token='';ss('kkm_m',null);show(true);if(m)$('lm').textContent=m}
 $('out').onclick=function(){logout()};
 $('login').addEventListener('submit',function(e){
- e.preventDefault();var b=e.target.querySelector('button');$('lm').textContent='';
+ e.preventDefault();var b=e.target.querySelector('button[type=submit]');$('lm').textContent='';
  if(!$('c').value.trim()||!$('p').value){$('lm').textContent='Isi nomor anggota dan password.';return}
  b.disabled=true;
  call({action:'mlogin',code:$('c').value,password:$('p').value}).then(function(j){
@@ -164,8 +172,13 @@ $('rl').addEventListener('click',function(e){
   var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([u],{type:'application/pdf'}));a.download=j.name;document.body.appendChild(a);a.click();a.remove();
  }).catch(function(){b.disabled=false;alert('Koneksi gagal.')});
 });
+function fmtRibuan(el){
+ var raw=(el.value||'').replace(/\D/g,'');
+ el.value=raw?parseInt(raw,10).toLocaleString('id-ID'):'';
+ return parseInt(raw,10)||0;
+}
 function sim(){
- var P=parseInt(($('a').value||'').replace(/\D/g,''),10)||0,n=parseInt($('t').value,10);
+ var P=fmtRibuan($('a')),n=parseInt($('t').value,10);
  if(!P){$('sim').textContent='—';$('st').textContent='';return}
  var jasa=Math.round(P*RATE/100*n),tot=P+jasa;
  $('sim').textContent=rp(Math.floor(tot/n));$('st').textContent='Total bayar '+rp(tot)+' selama '+n+' bulan (jasa '+RATE+'% per bulan)';
