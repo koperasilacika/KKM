@@ -49,7 +49,7 @@ else if(slug){
  }).catch(function(){$('m').innerHTML='<p class="empty">Koneksi gagal. Coba muat ulang.</p>'});
 }else{
  fetch(API+'?action=public').then(function(r){return r.json()}).then(function(j){
-  $('m').innerHTML='<h1>Berita kegiatan</h1><div class="meta">Kegiatan usaha, keanggotaan, dan rapat anggota.</div><div class="list">'+(j.news.length?j.news.map(function(n){return '<article class="post">'+(n.image_id?'<img loading="lazy" alt="" src="'+img(n.image_id,500)+'">':'<div class="ph"></div>')+'<div class="b"><span class="tag">'+esc(n.category)+'</span><h2><a href="berita.html?slug='+encodeURIComponent(n.slug)+'">'+esc(n.title)+'</a></h2><div class="meta">'+dt(n.published_at)+'</div><p>'+esc(n.excerpt)+'</p></div></article>'}).join(''):'<p class="empty">Belum ada berita.</p>')+'</div>';
+  $('m').innerHTML='<h1>Berita kegiatan</h1><div class="meta">Kegiatan usaha, keanggotaan, rapat anggota, dan kegiatan sosial.</div><div class="list">'+(j.news.length?j.news.map(function(n){return '<article class="post">'+(n.image_id?'<img loading="lazy" alt="" src="'+img(n.image_id,500)+'">':'<div class="ph"></div>')+'<div class="b"><span class="tag">'+esc(n.category)+'</span><h2><a href="berita.html?slug='+encodeURIComponent(n.slug)+'">'+esc(n.title)+'</a></h2><div class="meta">'+dt(n.published_at)+'</div><p>'+esc(n.excerpt)+'</p></div></article>'}).join(''):'<p class="empty">Belum ada berita.</p>')+'</div>';
  }).catch(function(){$('m').innerHTML='<p class="empty">Koneksi gagal. Coba muat ulang.</p>'});
 }
 </script>
