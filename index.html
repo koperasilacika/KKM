@@ -22,41 +22,77 @@ a{color:inherit}
 .skip{position:absolute;left:-999px;top:8px;background:var(--acc);color:#000;padding:10px 14px;z-index:99;border-radius:8px;font-weight:700}
 .skip:focus{left:8px}
 :focus-visible{outline:3px solid var(--acc);outline-offset:2px}
-.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) header{background:rgba(7,20,42,.9)}}
-:root[data-theme="dark"] header{background:rgba(7,20,42,.9)}
-.bar{display:flex;align-items:center;justify-content:space-between;height:66px;gap:12px}
-.brand{font-weight:800;font-size:17px;text-decoration:none;color:var(--navy);display:flex;align-items:center;gap:11px;letter-spacing:-.02em}
-.lg{width:42px;height:42px;flex:none;border-radius:50%;background:#fff var(--logo) center/contain no-repeat;box-shadow:0 0 0 1px var(--line)}.lg.big{width:88px;height:88px;margin:0 0 16px;box-shadow:0 6px 18px rgba(0,0,0,.2)}.lg.mid{width:60px;height:60px;box-shadow:none}
-nav ul{display:none;list-style:none;margin:0;padding:0;gap:20px}
-nav a{text-decoration:none;font-size:14.5px;font-weight:500;color:var(--mute);transition:color .15s}nav a:hover{color:var(--ink)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 18px}
+
+/* Header & Navigasi Centering + Highlight Animasi */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) header{background:rgba(7,20,42,.92)}}
+:root[data-theme="dark"] header{background:rgba(7,20,42,.92)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.brand{font-weight:800;font-size:16px;text-decoration:none;color:var(--navy);display:flex;align-items:center;gap:10px;letter-spacing:-.02em;min-width:0;flex:none}
+.brand span.bt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lg{width:40px;height:40px;flex:none;border-radius:50%;background:#fff var(--logo) center/contain no-repeat;box-shadow:0 0 0 1px var(--line)}.lg.big{width:88px;height:88px;margin:0 0 16px;box-shadow:0 6px 18px rgba(0,0,0,.2)}.lg.mid{width:60px;height:60px;box-shadow:none}
+
+nav{flex:1;display:flex;justify-content:center}
+nav ul{display:none;list-style:none;margin:0;padding:0;gap:4px;align-items:center;justify-content:center}
+nav a{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:10px;text-decoration:none;font-size:13.5px;font-weight:600;color:var(--mute);white-space:nowrap;overflow:hidden;transition:color .2s ease,background-color .2s ease,transform .12s ease}
+nav a::after{content:"";position:absolute;left:50%;bottom:4px;width:0;height:2.5px;border-radius:99px;background:var(--acc);transform:translateX(-50%);transition:width .24s cubic-bezier(.22,1,.36,1)}
+nav a:hover,nav a:focus-visible{color:var(--navy);background:rgba(37,87,167,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) nav a:hover{color:#fff;background:rgba(110,160,240,.14)}}
+:root[data-theme="dark"] nav a:hover{color:#fff;background:rgba(110,160,240,.14)}
+nav a:hover::after,nav a.active::after{width:64%}
+nav a.active{color:var(--navy);background:rgba(37,87,167,.1);font-weight:700}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) nav a.active{color:#fff;background:rgba(110,160,240,.18)}}
+nav a:active{transform:scale(.95);background:rgba(251,195,29,.22)}
+
+.nav-acts{display:flex;align-items:center;gap:8px;flex:none}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border-radius:10px;font-weight:600;text-decoration:none;border:2px solid var(--navy);background:var(--navy);color:var(--on);cursor:pointer;font-size:15px;font-family:inherit;transition:transform .12s,box-shadow .15s,opacity .15s}
 .btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(11,36,71,.18)}
-.btn:active{transform:translateY(0)}
+.btn:active{transform:scale(.98)}
 .btn.ghost{background:transparent;color:var(--navy)}
-.menu{min-height:44px;min-width:44px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer}
-#mnav{display:none;border-top:1px solid var(--line);padding:8px 20px 16px;background:var(--bg)}
-#mnav.open{display:block}#mnav a{display:block;padding:12px 0;text-decoration:none;font-weight:500;border-bottom:1px solid var(--line)}
-.hero{background:linear-gradient(145deg,#0b2447 0%,#14386e 100%);color:var(--on);padding:60px 0 68px}
-.hero .wrap{display:grid;gap:36px}
-.eyebrow{display:inline-block;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);font-weight:700;margin:0 0 12px;background:rgba(251,195,29,.12);padding:4px 12px;border-radius:999px;border:1px solid rgba(251,195,29,.3)}
-h1{font-size:clamp(30px,5.5vw,50px);font-weight:800;line-height:1.12;margin:0 0 16px;letter-spacing:-.025em}
-.hero p.lead{font-size:17.5px;max-width:52ch;margin:0 0 28px;opacity:.9;line-height:1.65}
+.hdr-cta{display:none}
+
+/* Tombol Hamburger Modern */
+.menu{width:44px;height:44px;padding:0;border:1px solid var(--line);background:var(--surf);color:var(--ink);border-radius:11px;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;transition:background .15s,border-color .15s,transform .12s}
+.menu:hover{border-color:var(--navy2)}
+.menu:active{transform:scale(.95)}
+.menu span{display:block;width:20px;height:2px;background:currentColor;border-radius:2px;transition:transform .22s ease,opacity .18s ease}
+.menu[aria-expanded="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.menu[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menu[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* Drawer Menu HP & Tablet (Centering + Highlight Animasi) */
+#mnav{display:none;border-top:1px solid var(--line);padding:14px 18px 22px;background:var(--bg);box-shadow:0 18px 36px rgba(11,36,71,.14);max-height:calc(100dvh - 68px);overflow-y:auto}
+#mnav.open{display:block}
+.mnav-grid{display:grid;grid-template-columns:1fr;gap:6px;max-width:520px;margin:0 auto}
+@media (min-width:560px){.mnav-grid{grid-template-columns:1fr 1fr;gap:8px 12px}}
+#mnav a.mlink{position:relative;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px 14px;text-decoration:none;font-weight:600;font-size:15px;border-radius:11px;color:var(--ink);border:1px solid transparent;transition:background .18s,color .18s,border-color .18s,transform .12s}
+#mnav a.mlink:hover,#mnav a.mlink:focus-visible{background:rgba(37,87,167,.08);color:var(--navy2);border-color:rgba(37,87,167,.2)}
+#mnav a.mlink:active{transform:scale(.97);background:rgba(251,195,29,.22);border-color:var(--acc)}
+.mnav-btns{display:grid;grid-template-columns:1fr;gap:10px;max-width:520px;margin:14px auto 0;padding-top:14px;border-top:1px solid var(--line)}
+@media (min-width:480px){.mnav-btns{grid-template-columns:1fr 1fr 1fr}}
+.mnav-btns .btn{min-height:42px;padding:0 12px;font-size:13.5px;width:100%}
+
+.hero{background:linear-gradient(145deg,#0b2447 0%,#14386e 100%);color:var(--on);padding:52px 0 64px}
+.hero .wrap{display:grid;gap:32px}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);font-weight:700;margin:0 0 12px;background:rgba(251,195,29,.12);padding:4px 12px;border-radius:999px;border:1px solid rgba(251,195,29,.3)}
+h1{font-size:clamp(28px,5.5vw,50px);font-weight:800;line-height:1.12;margin:0 0 16px;letter-spacing:-.025em}
+.hero p.lead{font-size:17px;max-width:52ch;margin:0 0 26px;opacity:.9;line-height:1.65}
 .cta{display:flex;flex-wrap:wrap;gap:12px}
 .hero .btn{background:var(--acc);border-color:var(--acc);color:#0b2447;font-weight:700}
 .hero .btn.ghost{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.45)}
 .panel{background:rgba(255,255,255,.08);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:24px;box-shadow:0 16px 36px rgba(0,0,0,.22)}
-.panel h2{font-size:14px;margin:0 0 14px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;opacity:.85}
+.panel h2{font-size:13.5px;margin:0 0 14px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;opacity:.85}
 .stat{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0;border-top:1px solid rgba(255,255,255,.16)}
-.stat:first-of-type{border-top:0}.stat b{font-size:26px;font-weight:800;letter-spacing:-.02em}.stat span{font-size:14px;opacity:.88}
+.stat:first-of-type{border-top:0}.stat b{font-size:28px;font-weight:800;letter-spacing:-.02em;color:var(--acc);transition:transform .2s}.stat span{font-size:14.5px;opacity:.9}
 .note{font-size:12.5px;opacity:.75;margin:12px 0 0}
-section{padding:76px 0}
+section{padding:72px 0}
 section.alt{background:var(--surf)}
-h2.t{font-size:clamp(26px,4vw,36px);font-weight:800;line-height:1.15;margin:0 0 10px;letter-spacing:-.02em;color:var(--navy)}
+h2.t{font-size:clamp(25px,4vw,36px);font-weight:800;line-height:1.15;margin:0 0 10px;letter-spacing:-.02em;color:var(--navy)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h2.t,:root:not([data-theme="light"]) .brand{color:var(--ink)}}
 :root[data-theme="dark"] h2.t,:root[data-theme="dark"] .brand{color:var(--ink)}
-.sub{color:var(--mute);max-width:60ch;margin:0 0 32px;font-size:16px}
+.sub{color:var(--mute);max-width:60ch;margin:0 0 30px;font-size:16px}
 .units{display:grid;gap:0;border-top:3px solid var(--acc);background:var(--bg);border-radius:0 0 14px 14px;padding:0 20px;border-left:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line);box-shadow:var(--sh)}
 .unit{display:grid;gap:6px;padding:22px 0;border-bottom:1px solid var(--line)}
 .unit:last-child{border-bottom:0}
@@ -81,6 +117,7 @@ tbody tr:last-child td{border-bottom:0}
 .post h3{margin:6px 0;font-size:17px;font-weight:700;line-height:1.35}.post p{margin:0;color:var(--mute);font-size:14px}
 label{display:block;font-weight:600;font-size:14px;margin:0 0 6px}
 input,select,textarea{width:100%;min-height:44px;padding:10px 13px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;transition:border-color .15s,box-shadow .15s}
+input[type="file"]{padding:8px 10px;font-size:14px}
 input:focus,select:focus,textarea:focus{border-color:var(--navy2);box-shadow:0 0 0 3px rgba(37,87,167,.12);outline:none}
 .f{margin-bottom:16px}.err{color:#c0392b;font-size:13px;min-height:18px;margin-top:4px;font-weight:500}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .err{color:#ff8a7a}}
@@ -90,6 +127,16 @@ input:focus,select:focus,textarea:focus{border-color:var(--navy2);box-shadow:0 0
 .steps{counter-reset:s;list-style:none;padding:0;margin:0 0 20px}
 .steps li{counter-increment:s;padding:12px 0 12px 42px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
 .steps li::before{content:counter(s);position:absolute;left:0;top:11px;width:28px;height:28px;border-radius:50%;background:var(--acc);color:#0b2447;display:grid;place-items:center;font-size:13.5px;font-weight:800}
+.dansos-rules{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:12px}
+.dansos-rules li{background:var(--bg);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:12px;padding:14px 16px;font-size:14.5px;line-height:1.55;box-shadow:var(--sh)}
+.dansos-rules li strong{display:block;color:var(--navy);font-size:15px;margin-bottom:3px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dansos-rules li strong{color:var(--ink)}}
+.nominal-pill{display:inline-block;margin-top:6px;font-size:12.5px;font-weight:700;color:var(--ok);background:rgba(21,128,61,.09);padding:3px 10px;border-radius:999px}
+.branch-box{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:16px 16px 4px;margin-bottom:16px}
+.branch-title{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--navy2);margin:0 0 12px}
+.row2{display:grid;gap:12px}
+@media (min-width:520px){.row2{grid-template-columns:1fr 1fr}}
+[hidden]{display:none!important}
 .ok{color:var(--ok);font-weight:600}
 .lock-banner{margin-top:20px;padding:18px 20px;border-radius:14px;background:linear-gradient(135deg,rgba(11,36,71,.05),rgba(37,87,167,.08));border:1px solid var(--line);border-left:4px solid var(--acc);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
 .lock-info{display:flex;align-items:center;gap:14px;flex:1;min-width:240px}
@@ -98,8 +145,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--navy2);box-shadow:0 0
 .lock-text span{display:block;font-size:13.5px;color:var(--mute);line-height:1.45}
 footer{background:var(--brand);color:var(--on);padding:44px 0}
 footer .wrap{display:grid;gap:10px;font-size:14px}footer a{color:var(--acc);font-weight:600;text-decoration:none}footer a:hover{text-decoration:underline}
-@media (min-width:860px){
-nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
+
+@media (min-width:1024px){
+nav ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{display:inline-flex}
 .hero .wrap{grid-template-columns:1.3fr .9fr;align-items:center}
 .unit{grid-template-columns:64px 1fr 1.4fr;align-items:baseline}
 .two{grid-template-columns:1fr 1fr}.news{grid-template-columns:repeat(3,1fr)}
@@ -112,34 +160,59 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
 <a class="skip" href="#main">Lewati ke konten</a>
 <header>
  <div class="wrap bar">
-  <a class="brand" href="#top"><span class="lg" role="img" aria-label="Logo Primkopasindo, Lapas Kelas IIA Cikarang"></span>Koperasi Konsumen Mandiri</a>
+  <a class="brand" href="#top"><span class="lg" role="img" aria-label="Logo Primkopasindo, Lapas Kelas IIA Cikarang"></span><span class="bt">Koperasi Konsumen Mandiri</span></a>
   <nav aria-label="Menu utama"><ul>
-   <li><a href="#usaha">Usaha</a></li><li><a href="#profil">Profil</a></li><li><a href="#berita">Berita</a></li><li><a href="#anggota">Anggota</a></li><li><a href="#pinjam">Simpan Pinjam</a></li><li><a href="#laporan">Laporan</a></li><li><a href="anggota.html">Login Anggota</a></li><li><a href="admin.html">Login Pengurus</a></li>
+   <li><a href="#usaha">Usaha</a></li>
+   <li><a href="#profil">Profil</a></li>
+   <li><a href="#berita">Berita</a></li>
+   <li><a href="#anggota">Anggota</a></li>
+   <li><a href="#dansos">Dana Sosial</a></li>
+   <li><a href="#pinjam">Simpan Pinjam</a></li>
+   <li><a href="#laporan">Laporan</a></li>
+   <li><a href="anggota.html">Login Anggota</a></li>
+   <li><a href="admin.html">Pengurus</a></li>
   </ul></nav>
-  <button class="menu" id="mb" aria-expanded="false" aria-controls="mnav">Menu</button>
-  <a class="btn" href="#anggota" style="min-height:40px;padding:0 16px;font-size:14px">Daftar</a>
+  <div class="nav-acts">
+   <a class="btn hdr-cta" href="#anggota" style="min-height:40px;padding:0 16px;font-size:13.5px">Daftar</a>
+   <button class="menu" id="mb" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="mnav">
+    <span></span><span></span><span></span>
+   </button>
+  </div>
  </div>
  <div id="mnav">
-  <a href="#usaha">Usaha</a><a href="#profil">Profil</a><a href="#berita">Berita</a><a href="#anggota">Anggota</a><a href="#pinjam">Simpan Pinjam</a><a href="#laporan">Laporan Usaha</a><a href="anggota.html">Login Anggota</a><a href="admin.html">Login Pengurus</a>
+  <div class="mnav-grid">
+   <a class="mlink" href="#usaha">Unit Usaha</a>
+   <a class="mlink" href="#profil">Profil & Pengurus</a>
+   <a class="mlink" href="#berita">Berita Kegiatan</a>
+   <a class="mlink" href="#anggota">Pendaftaran Anggota</a>
+   <a class="mlink" href="#dansos">Pengajuan Dana Sosial</a>
+   <a class="mlink" href="#pinjam">Simulasi Simpan Pinjam</a>
+   <a class="mlink" href="#laporan">Laporan Usaha</a>
+  </div>
+  <div class="mnav-btns">
+   <a class="btn" href="#anggota">Daftar Anggota</a>
+   <a class="btn ghost" href="anggota.html">Login Anggota</a>
+   <a class="btn ghost" href="admin.html">Login Pengurus</a>
+  </div>
  </div>
 </header>
 
 <main id="main">
 <div id="top"></div>
-<section class="hero" style="padding-top:60px">
+<section class="hero" style="padding-top:52px">
  <div class="wrap">
   <div>
    <p class="eyebrow">Cikarang Pusat, Kabupaten Bekasi</p>
    <h1>Kesejahteraan Anggota adalah Prioritas Kami.</h1>
-   <p class="lead">Koperasi Konsumen Mandiri menjual barang dan makanan kemasan, menyediakan makanan jadi setiap hari, dan melayani simpan pinjam untuk anggota.</p>
-   <div class="cta"><a class="btn" href="#anggota">Daftar jadi anggota</a><a class="btn ghost" href="#pinjam">Simulasikan cicilan</a></div>
+   <p class="lead">Koperasi Konsumen Mandiri menjual barang dan makanan kemasan, menyediakan makanan jadi setiap hari, melayani simpan pinjam, serta menyalurkan dana sosial untuk anggota.</p>
+   <div class="cta"><a class="btn" href="#anggota">Daftar jadi anggota</a><a class="btn ghost" href="#dansos">Ajukan dana sosial</a></div>
   </div>
   <aside class="panel" aria-label="Ringkasan koperasi">
    <div class="lg big" role="img" aria-label="Logo Primkopasindo, Lapas Kelas IIA Cikarang"></div>
    <h2>Ringkasan publik</h2>
-   <div class="stat"><span>Anggota aktif</span><b id="cA">—</b></div>
-   <div class="stat"><span>Pendaftar diproses</span><b id="cP">—</b></div>
-   <div class="stat"><span>Unit usaha aktif</span><b>3</b></div>
+   <div class="stat"><span>Anggota aktif</span><b id="cA" data-val="0">0</b></div>
+   <div class="stat"><span>Pendaftar diproses</span><b id="cP" data-val="0">0</b></div>
+   <div class="stat"><span>Unit usaha aktif</span><b id="cU" data-val="0">0</b></div>
    <p class="note">Angka anggota diambil dari data keanggotaan saat sistem terhubung.</p>
   </aside>
  </div>
@@ -247,7 +320,131 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
  </div>
 </section>
 
-<section id="pinjam">
+<!-- PENGAJUAN DANA SOSIAL -->
+<section id="dansos">
+ <div class="wrap two">
+  <div>
+   <h2 class="t">Pengajuan dana sosial</h2>
+   <p class="sub">Ketentuan penyaluran Dana Sosial Koperasi Konsumen Mandiri Lapas Cikarang bagi anggota aktif beserta keluarga inti.</p>
+   <ul class="dansos-rules">
+    <li>
+     <strong>1. Bantuan Kesehatan (Rawat Inap)</strong>
+     Untuk anggota, istri/suami, anak, dan orang tua kandung (ayah/ibu) yang dirawat inap di Rumah Sakit minimal <b>2 (dua) malam</b> dan seterusnya (maks. 1 kali dalam 1 tahun) dengan melampirkan Surat Keterangan Rawat Inap dari RS.
+     <span class="nominal-pill">Santunan: Rp 1.000.000</span>
+    </li>
+    <li>
+     <strong>2. Bantuan Persalinan</strong>
+     Diberikan untuk istri anggota yang melahirkan dengan batasan maksimal kelahiran anak kedua.
+     <span class="nominal-pill">Santunan: Rp 1.000.000</span>
+    </li>
+    <li>
+     <strong>3. Bantuan Belasungkawa Anggota</strong>
+     Diberikan apabila anggota Koperasi Konsumen Mandiri Lapas Cikarang meninggal dunia.
+     <span class="nominal-pill">Santunan: Rp 1.000.000</span>
+    </li>
+    <li>
+     <strong>4. Bantuan Belasungkawa Keluarga Inti</strong>
+     Diberikan apabila orang tua kandung (ayah/ibu), istri/suami, atau anak anggota meninggal dunia.
+     <span class="nominal-pill">Santunan: Rp 1.000.000</span>
+    </li>
+   </ul>
+  </div>
+
+  <form class="card" id="dsform" novalidate>
+   <h3>Formulir pengajuan dana sosial</h3>
+   <div class="f">
+    <label for="ds-jenis">1. Jenis Dana Sosial <span style="color:#c0392b">*</span></label>
+    <select id="ds-jenis" required>
+     <option value="">— Pilih Jenis Dana Sosial —</option>
+     <option value="Bantuan Persalinan Anak Pertama">Bantuan Persalinan Anak Pertama</option>
+     <option value="Bantuan Persalinan Anak Kedua">Bantuan Persalinan Anak Kedua</option>
+     <option value="Bantuan Kesehatan (Sakit) dirawat 2 malam dan seterusnya di RS">Bantuan Kesehatan (Sakit) dirawat 2 (dua) malam dan seterusnya di Rumah Sakit</option>
+     <option value="Bantuan Belasungkawa (keluarga inti) meninggal">Bantuan Belasungkawa (keluarga inti) meninggal</option>
+    </select>
+    <div class="err" id="dse-jenis"></div>
+   </div>
+
+   <!-- Cabang Bantuan Kesehatan -->
+   <div class="branch-box" id="ds-box-sehat" hidden>
+    <div class="branch-title">Detail Bantuan Kesehatan (Rawat Inap RS)</div>
+    <div class="f">
+     <label for="ds-lama">2. Lama Rawat Inap (malam/hari, min. 2 hari) <span style="color:#c0392b">*</span></label>
+     <input id="ds-lama" type="number" min="2" inputmode="numeric" placeholder="contoh: 3">
+     <div class="err" id="dse-lama"></div>
+    </div>
+    <div class="row2">
+     <div class="f">
+      <label for="ds-awal">3. Tanggal Awal Rawat Inap <span style="color:#c0392b">*</span></label>
+      <input id="ds-awal" type="date">
+      <div class="err" id="dse-awal"></div>
+     </div>
+     <div class="f">
+      <label for="ds-akhir">4. Tanggal Akhir Rawat Inap <span style="color:#c0392b">*</span></label>
+      <input id="ds-akhir" type="date">
+      <div class="err" id="dse-akhir"></div>
+     </div>
+    </div>
+   </div>
+
+   <!-- Cabang Persalinan Anak -->
+   <div class="branch-box" id="ds-box-lahir" hidden>
+    <div class="branch-title">Detail Persalinan Anak</div>
+    <div class="f">
+     <label for="ds-lahir">5. Tanggal Kelahiran Anak <span style="color:#c0392b">*</span></label>
+     <input id="ds-lahir" type="date">
+     <div class="err" id="dse-lahir"></div>
+    </div>
+   </div>
+
+   <!-- Cabang Bantuan Belasungkawa -->
+   <div class="branch-box" id="ds-box-duka" hidden>
+    <div class="branch-title">Detail Bantuan Belasungkawa</div>
+    <div class="f">
+     <label for="ds-keluarga">6. Keluarga yang meninggal <span style="color:#c0392b">*</span></label>
+     <select id="ds-keluarga">
+      <option value="">— Pilih Hubungan Keluarga —</option>
+      <option value="ayah">Ayah</option>
+      <option value="ibu">Ibu</option>
+      <option value="suami / istri">Suami / Istri</option>
+      <option value="anak">Anak</option>
+     </select>
+     <div class="err" id="dse-keluarga"></div>
+    </div>
+    <div class="f">
+     <label for="ds-tgl-duka">7. Tanggal peristiwa <span style="color:#c0392b">*</span></label>
+     <input id="ds-tgl-duka" type="date">
+     <div class="err" id="dse-duka"></div>
+    </div>
+   </div>
+
+   <!-- Identitas & Bukti -->
+   <div class="f">
+    <label for="ds-nama">8. Nama Lengkap Anggota Koperasi <span style="color:#c0392b">*</span></label>
+    <input id="ds-nama" autocomplete="name" placeholder="Nama lengkap sesuai data keanggotaan" required>
+    <div class="err" id="dse-nama"></div>
+   </div>
+
+   <div class="f">
+    <label for="ds-bukti">9. Silahkan upload bukti peristiwa (Surat Ket. Rawat Inap / Akta Lahir / Surat Kematian, maks. 5 MB) <span style="color:#c0392b">*</span></label>
+    <input id="ds-bukti" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required>
+    <div class="err" id="dse-bukti"></div>
+   </div>
+
+   <div class="f">
+    <label for="ds-rek">10. Masukan Nomor Rekening <span style="color:#c0392b">*</span></label>
+    <input id="ds-rek" placeholder="Contoh: BCA-08273647738" required>
+    <div class="err" id="dse-rek"></div>
+   </div>
+
+   <div aria-hidden="true" style="position:absolute;left:-9999px"><label for="ds-hp2">Jangan diisi</label><input id="ds-hp2" tabindex="-1" autocomplete="off"></div>
+
+   <button class="btn" type="submit">Kirim pengajuan dana sosial</button>
+   <div id="dsok" class="ok" role="status" style="margin-top:12px"></div>
+  </form>
+ </div>
+</section>
+
+<section id="pinjam" class="alt">
  <div class="wrap two">
   <div>
    <h2 class="t">Simpan pinjam</h2>
@@ -265,7 +462,7 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
  </div>
 </section>
 
-<section id="laporan" class="alt">
+<section id="laporan">
  <div class="wrap">
   <h2 class="t">Laporan usaha</h2>
   <p class="sub">Pertanggungjawaban pengurus per periode: barang & makanan kemasan, makanan jadi, dan rekap konsolidasi.</p>
@@ -285,7 +482,7 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
  </div>
 </section>
 
-<section id="masuk">
+<section id="masuk" class="alt">
  <div class="wrap two">
   <div>
    <h2 class="t">Portal anggota & pengurus</h2>
@@ -294,7 +491,7 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}
   <div class="card">
    <h3>Anggota</h3><ul><li>Saldo simpanan pokok, wajib, dan sukarela</li><li>Sisa tagihan dan cicilan terdekat</li><li>Berita terbaru dan unduhan laporan</li></ul>
    <p style="margin:14px 0 0"><a class="btn" href="anggota.html">Login Anggota</a></p>
-   <h3 style="margin-top:22px">Pengurus</h3><ul><li>Antrean pendaftar dan pengajuan pinjaman</li><li>Omzet usaha bulan terakhir</li><li>Log aktivitas dan persetujuan cepat</li></ul>
+   <h3 style="margin-top:22px">Pengurus</h3><ul><li>Antrean pendaftar, pengajuan pinjaman, dan dana sosial</li><li>Omzet usaha bulan terakhir</li><li>Log aktivitas dan persetujuan cepat</li></ul>
    <p style="margin:14px 0 0"><a class="btn ghost" href="admin.html">Login Pengurus</a></p>
   </div>
  </div>
@@ -317,6 +514,39 @@ var API=window.KKM_API||'';
 var $=function(i){return document.getElementById(i)};
 $('mb').onclick=function(){var o=$('mnav').classList.toggle('open');this.setAttribute('aria-expanded',o)};
 $('mnav').onclick=function(e){if(e.target.tagName==='A'){this.classList.remove('open');$('mb').setAttribute('aria-expanded',false)}};
+
+/* Highlight Menu Aktif saat Diklik / Scroll */
+var navLinks=document.querySelectorAll('nav a[href^="#"], #mnav a.mlink');
+navLinks.forEach(function(a){
+ a.addEventListener('click',function(){
+  navLinks.forEach(function(x){x.classList.remove('active')});
+  var href=a.getAttribute('href');
+  document.querySelectorAll('a[href="'+href+'"]').forEach(function(m){m.classList.add('active')});
+ });
+});
+
+/* Animasi Berhitung Angka (Count-Up) Ringkasan Publik */
+function countUp(el,target,dur){
+ var to=parseInt(target,10);
+ if(isNaN(to))to=0;
+ var from=parseInt(el.dataset.val,10)||0;
+ el.dataset.val=to;
+ if(from===to){el.textContent=to.toLocaleString('id-ID');return}
+ var start=null,ms=dur||1100;
+ function step(ts){
+  if(!start)start=ts;
+  var p=Math.min((ts-start)/ms,1);
+  var ease=1-Math.pow(1-p,3); // easeOutCubic
+  var cur=Math.round(from+(to-from)*ease);
+  el.textContent=cur.toLocaleString('id-ID');
+  if(p<1)requestAnimationFrame(step);
+  else el.textContent=to.toLocaleString('id-ID');
+ }
+ requestAnimationFrame(step);
+}
+// Jalankan animasi awal untuk Unit Usaha Aktif (3)
+countUp($('cU'),3,900);
+
 function rp(n){return 'Rp '+Math.round(n).toLocaleString('id-ID')}
 function fmtRibuan(el){var raw=(el.value||'').replace(/\D/g,'');el.value=raw?parseInt(raw,10).toLocaleString('id-ID'):'';return parseInt(raw,10)||0}
 $('sp').addEventListener('input',function(){fmtRibuan($('sp'))});
@@ -328,6 +558,8 @@ function sim(){
  $('tot').textContent='Total bayar '+rp(total)+' selama '+n+' bulan'+(Math.round(last)!==per?' (cicilan terakhir '+rp(last)+')':'');
 }
 ['pa','pt','pr'].forEach(function(i){$(i).addEventListener('input',sim)});sim();
+
+/* Formulir Pendaftaran Anggota */
 $('reg').addEventListener('submit',function(e){
  e.preventDefault();var ok=true;
  function chk(id,eid,bad,msg){$(eid).textContent=bad?msg:'';if(bad)ok=false}
@@ -349,12 +581,93 @@ $('reg').addEventListener('submit',function(e){
  .catch(function(){$('rok').className='err';$('rok').textContent='Koneksi gagal. Coba lagi sebentar lagi.'})
  .then(function(){btn.disabled=false});
 });
+
+/* Logika Percabangan Form Dana Sosial */
+function updateDansosBranch(){
+ var v=$('ds-jenis').value;
+ $('ds-box-sehat').hidden=v.indexOf('Kesehatan')===-1;
+ $('ds-box-lahir').hidden=v.indexOf('Persalinan')===-1;
+ $('ds-box-duka').hidden=v.indexOf('Belasungkawa')===-1;
+}
+$('ds-jenis').addEventListener('change',updateDansosBranch);
+updateDansosBranch();
+
+$('dsform').addEventListener('submit',function(e){
+ e.preventDefault();
+ var ok=true,v=$('ds-jenis').value;
+ function chk(eid,bad,msg){$(eid).textContent=bad?msg:'';if(bad)ok=false}
+ chk('dse-jenis',!v,'Pilih jenis dana sosial terlebih dahulu.');
+ ['dse-lama','dse-awal','dse-akhir','dse-lahir','dse-keluarga','dse-duka'].forEach(function(id){$(id).textContent=''});
+
+ if(v.indexOf('Kesehatan')>-1){
+  var lama=parseInt($('ds-lama').value,10)||0;
+  chk('dse-lama',lama<2,'Minimal 2 hari/malam rawat inap.');
+  chk('dse-awal',!$('ds-awal').value,'Isi tanggal awal rawat inap.');
+  chk('dse-akhir',!$('ds-akhir').value,'Isi tanggal akhir rawat inap.');
+  if($('ds-awal').value&&$('ds-akhir').value&&$('ds-akhir').value<$('ds-awal').value){
+   chk('dse-akhir',true,'Tanggal akhir tidak boleh sebelum tanggal awal.');
+  }
+ }else if(v.indexOf('Persalinan')>-1){
+  chk('dse-lahir',!$('ds-lahir').value,'Isi tanggal kelahiran anak.');
+ }else if(v.indexOf('Belasungkawa')>-1){
+  chk('dse-keluarga',!$('ds-keluarga').value,'Pilih keluarga yang meninggal.');
+  chk('dse-duka',!$('ds-tgl-duka').value,'Isi tanggal peristiwa.');
+ }
+
+ chk('dse-nama',!$('ds-nama').value.trim(),'Nama lengkap anggota wajib diisi.');
+ var file=$('ds-bukti').files[0];
+ if(!file){chk('dse-bukti',true,'Silahkan upload bukti peristiwa.');}
+ else if(file.size>5*1024*1024){chk('dse-bukti',true,'Ukuran berkas maksimal 5 MB.');}
+ else{chk('dse-bukti',false,'');}
+ chk('dse-rek',!$('ds-rek').value.trim(),'Nomor rekening wajib diisi (contoh: BCA-08273647738).');
+
+ if(!ok){$('dsok').textContent='';return}
+ if(!API){$('dsok').className='ok';$('dsok').textContent='Mode demo: pengajuan dana sosial lolos pemeriksaan.';return}
+
+ var btn=e.target.querySelector('button[type=submit]'),f=e.target;
+ btn.disabled=true;$('dsok').className='';$('dsok').textContent='Mengunggah bukti & mengirim pengajuan…';
+
+ var fr=new FileReader();
+ fr.onload=function(){
+  var body={
+   action:'dansos_apply',
+   jenis_dana_sosial:v,
+   lama_rawat_inap:$('ds-lama').value,
+   tgl_awal_rawat:$('ds-awal').value,
+   tgl_akhir_rawat:$('ds-akhir').value,
+   tgl_kelahiran_anak:$('ds-lahir').value,
+   keluarga_meninggal:$('ds-keluarga').value,
+   tgl_peristiwa_duka:$('ds-tgl-duka').value,
+   nama_anggota:$('ds-nama').value.trim(),
+   nomor_rekening:$('ds-rek').value.trim(),
+   website:$('ds-hp2').value,
+   bukti:{name:file.name,mime:file.type,data:String(fr.result).split(',')[1]}
+  };
+  fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)})
+  .then(function(r){return r.json()})
+  .then(function(j){
+   if(j.ok){
+    f.reset();updateDansosBranch();
+    $('dsok').className='ok';
+    $('dsok').textContent='Pengajuan dana sosial diterima'+(j.dansos_code?' ('+j.dansos_code+')':'')+'. Pengurus akan segera memverifikasi bukti dan menyalurkan santunan Rp 1.000.000 ke rekening Anda.';
+   }else{
+    $('dsok').className='err';$('dsok').textContent=j.error||'Gagal mengirim pengajuan.';
+   }
+  })
+  .catch(function(){$('dsok').className='err';$('dsok').textContent='Koneksi gagal. Coba lagi sebentar lagi.'})
+  .then(function(){btn.disabled=false});
+ };
+ fr.onerror=function(){btn.disabled=false;$('dsok').className='err';$('dsok').textContent='Gagal membaca file bukti.'};
+ fr.readAsDataURL(file);
+});
+
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function dt(s){var d=new Date(s);return isNaN(d)?'':d.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}
 var UN={barang_kemasan:'Barang & Makanan Kemasan',makanan_jadi:'Makanan Jadi',konsolidasi:'Konsolidasi'};
 if(API){fetch(API+'?action=public').then(function(r){return r.json()}).then(function(j){
  if(!j.ok)return;
- $('cA').textContent=j.active;$('cP').textContent=j.pending;
+ countUp($('cA'),j.active,1200);
+ countUp($('cP'),j.pending,1000);
  var p=j.profile||{};
  if(p.address)$('pad').textContent=p.address;
  if(p.vision)$('pv').textContent=p.vision;
