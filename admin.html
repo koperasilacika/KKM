@@ -16,7 +16,7 @@ body{margin:0;background:var(--surf);color:var(--ink);font:16px/1.55 system-ui,-
 header{background:var(--brand);color:#fff;position:sticky;top:0;z-index:5}
 .bar{display:flex;align-items:center;gap:12px;min-height:60px}
 .lg{width:40px;height:40px;border-radius:50%;background:#fff var(--logo) center/contain no-repeat;flex:none}
-.bar b{flex:1;font-size:16px;line-height:1.2}.bar small{display:block;font-weight:400;opacity:.8;font-size:12px}
+.bar{gap:8px}.bar b{flex:1;font-size:16px;line-height:1.2}.bar small{display:block;font-weight:400;opacity:.8;font-size:12px}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:8px;font:600 15px inherit;font-family:inherit;border:2px solid var(--navy);background:var(--navy);color:var(--on);cursor:pointer}
 .btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
 .btn.bad{background:transparent;border-color:var(--bad);color:var(--bad)}
@@ -46,10 +46,11 @@ input[type=text],input[type=password],input[type=search]{width:100%;min-height:4
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--brand);color:#fff;padding:12px 18px;border-radius:10px;display:none;max-width:90%;z-index:20}
 .btn.alt{background:transparent;color:var(--navy)}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}.scroll{overflow-x:auto}
 .btn.alt{background:transparent;color:var(--navy)}select,textarea{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:16px}.kpi{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px}.kpi small{color:var(--mute);display:block;font-size:13px}.kpi b{font-size:20px;display:block;margin-top:4px}.thumb{width:72px;height:56px;border-radius:8px;object-fit:cover;background:var(--surf);flex:none}.row{display:flex;gap:12px;align-items:flex-start}.orow{display:grid;gap:8px;grid-template-columns:1fr 1fr;padding:10px 0;border-bottom:1px solid var(--line)}@media(min-width:700px){.orow{grid-template-columns:1.4fr 1fr 1fr 1fr auto}}
+dialog{border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);padding:20px;max-width:380px;width:calc(100% - 32px)}dialog::backdrop{background:rgba(0,0,0,.55)}dialog h2{margin:0 0 14px;font-size:18px}
 </style>
 </head>
 <body>
-<header><div class="wrap bar"><span class="lg" role="img" aria-label="Logo koperasi"></span><b>Panel Pengurus<small>Koperasi Konsumen Mandiri</small></b><button class="btn ghost" id="out" hidden>Keluar</button></div></header>
+<header><div class="wrap bar"><span class="lg" role="img" aria-label="Logo koperasi"></span><b>Panel Pengurus<small>Koperasi Konsumen Mandiri</small></b><button class="btn ghost" id="pwb" aria-label="Ganti password" hidden>Password</button><button class="btn ghost" id="out" hidden>Keluar</button></div></header>
 
 <main class="wrap">
  <form class="card" id="login" novalidate>
@@ -67,6 +68,12 @@ input[type=text],input[type=password],input[type=search]{width:100%;min-height:4
   <div id="list" aria-live="polite"></div>
  </section>
 </main>
+<dialog id="pw" aria-labelledby="pwt"><form id="pwf" novalidate><h2 id="pwt">Ganti password</h2>
+ <div class="f"><label for="pw-o">Password lama</label><input id="pw-o" type="password" autocomplete="current-password"></div>
+ <div class="f"><label for="pw-n">Password baru (minimal 8 karakter)</label><input id="pw-n" type="password" autocomplete="new-password"></div>
+ <div class="f"><label for="pw-c">Ulangi password baru</label><input id="pw-c" type="password" autocomplete="new-password"></div>
+ <div class="acts" style="display:flex;gap:8px"><button class="btn" type="submit">Simpan</button><button class="btn alt" type="button" id="pwc">Batal</button></div>
+ <div class="msg" id="pwm" role="status"></div></form></dialog>
 <div id="toast" role="status"></div>
 
 <script src="config.js"></script>
@@ -84,7 +91,7 @@ function call(body){
  if(!API)return Promise.reject(new Error('API belum diisi di file HTML.'));
  return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)}).then(function(r){return r.json()});
 }
-function show(login){$('login').style.display=login?'':'none';$('app').style.display=login?'none':'block';$('out').hidden=login}
+function show(login){$('login').style.display=login?'':'none';$('app').style.display=login?'none':'block';$('out').hidden=$('pwb').hidden=login}
 function logout(msg){S.token='';ss('kkm_t',null);show(true);if(msg)$('lm').textContent=msg}
 $('out').onclick=function(){logout()};
 $('login').addEventListener('submit',function(e){
@@ -281,6 +288,20 @@ $('list').addEventListener('submit',function(e){
   call({action:'profile_save',token:S.token,profile:{name:$('pf-n').value,legal_number:$('pf-l').value,address:$('pf-a').value,hours:$('pf-h').value,contact:$('pf-c').value,vision:$('pf-v').value,mission:$('pf-m').value},org:org}).then(function(j){
    if(j.expired){logout(j.error);return}btn.disabled=false;say('pf-m',j.ok?'Profil tersimpan.':(j.error||'Gagal.'),j.ok)}).catch(function(){btn.disabled=false;say('pf-m','Koneksi gagal.')});
  }
+});
+
+$('pwb').onclick=function(){$('pwf').reset();$('pwm').textContent='';$('pw').showModal()};
+$('pwc').onclick=function(){$('pw').close()};
+$('pwf').addEventListener('submit',function(e){
+ e.preventDefault();var o=$('pw-o').value,n=$('pw-n').value,c=$('pw-c').value,m=$('pwm');m.style.color='var(--bad)';
+ if(!o||!n){m.textContent='Isi semua kolom.';return}
+ if(n.length<8){m.textContent='Password baru minimal 8 karakter.';return}
+ if(n!==c){m.textContent='Konfirmasi password tidak sama.';return}
+ var b=e.target.querySelector('button[type=submit]');b.disabled=true;
+ call({action:'change_password',token:S.token,old_password:o,new_password:n}).then(function(j){
+  b.disabled=false;if(j.expired){$('pw').close();logout(j.error);return}
+  if(j.ok){m.style.color='var(--ok)';m.textContent='Password berhasil diganti.';e.target.reset();setTimeout(function(){$('pw').close()},1200)}else m.textContent=j.error||'Gagal.';
+ }).catch(function(){b.disabled=false;m.textContent='Koneksi gagal.'});
 });
 if(S.token){show(false);load()}else show(true);
 </script>
