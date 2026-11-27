@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b2447">
+<link rel="icon" type="image/png" href="logo.png">
+<title>Berita Kegiatan — Koperasi Konsumen Mandiri</title>
+<style>
+:root{--bg:#fff;--surf:#f2f5fa;--ink:#0f1b33;--mute:#4b5a75;--brand:#0b2447;--navy2:#2a5aa8;--line:#d9e0ec;--acc:#fbc31d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#07142a;--surf:#0e2140;--ink:#e8edf7;--mute:#9fb0cc;--navy2:#6c9be6;--line:#22385c}}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+header{background:var(--brand);color:#fff}.bar{display:flex;align-items:center;gap:12px;min-height:64px}
+.bar a{color:#fff;text-decoration:none;font-weight:700;display:flex;align-items:center;gap:10px;flex:1}
+.lg{width:42px;height:42px;border-radius:50%;background:#fff url(logo.png) center/contain no-repeat;flex:none}
+.back{font-weight:600;font-size:14px;color:var(--acc)!important;flex:none!important}
+main{padding:32px 0 64px}h1{font-size:clamp(26px,5vw,38px);line-height:1.2;margin:8px 0 12px;letter-spacing:-.01em}
+.tag{font-size:12px;font-weight:700;color:var(--navy2);text-transform:uppercase;letter-spacing:.05em}
+.meta{color:var(--mute);font-size:14px}
+.hero{width:100%;max-height:420px;object-fit:cover;border-radius:12px;margin:16px 0;background:var(--surf)}
+.body p{margin:0 0 1.1em}
+.list{display:grid;gap:16px;margin-top:20px}
+.post{display:grid;gap:12px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.post img,.post .ph{width:100%;height:160px;object-fit:cover;background:var(--surf);display:block}
+.post .b{padding:0 16px 16px}.post h2{margin:4px 0;font-size:19px}.post a{color:inherit;text-decoration:none}.post p{margin:0;color:var(--mute);font-size:15px}
+@media(min-width:700px){.post{grid-template-columns:240px 1fr}.post img,.post .ph{height:100%;min-height:150px}.post .b{padding:16px 16px 16px 0}}
+.empty{color:var(--mute);text-align:center;padding:40px 0}
+</style>
+</head>
+<body>
+<header><div class="wrap bar"><a href="index.html"><span class="lg" role="img" aria-label="Logo koperasi"></span>Koperasi Konsumen Mandiri</a><a class="back" href="index.html#berita">&larr; Beranda</a></div></header>
+<main class="wrap" id="m"><p class="empty">Memuat…</p></main>
+<script src="config.js"></script>
+<script>
+var API=window.KKM_API||'',$=function(i){return document.getElementById(i)};
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function dt(s){var d=new Date(s);return isNaN(d)?'':d.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}
+function img(id,w){return 'https://drive.google.com/thumbnail?id='+id+'&sz=w'+w}
+var slug=new URLSearchParams(location.search).get('slug');
+if(!API){$('m').innerHTML='<p class="empty">Berita akan tampil setelah sistem terhubung.</p>'}
+else if(slug){
+ fetch(API+'?action=news&slug='+encodeURIComponent(slug)).then(function(r){return r.json()}).then(function(j){
+  if(!j.ok){$('m').innerHTML='<p class="empty">'+esc(j.error||'Berita tidak ditemukan.')+'</p><p style="text-align:center"><a href="berita.html">Lihat semua berita</a></p>';return}
+  var n=j.news;document.title=n.title+' — Koperasi Konsumen Mandiri';
+  $('m').innerHTML='<span class="tag">'+esc(n.category)+'</span><h1>'+esc(n.title)+'</h1><div class="meta">'+dt(n.published_at)+'</div>'+(n.image_id?'<img class="hero" alt="Foto kegiatan: '+esc(n.title)+'" src="'+img(n.image_id,1200)+'">':'')+'<div class="body">'+String(n.content).split(/\n\s*\n/).map(function(p){return '<p>'+esc(p).replace(/\n/g,'<br>')+'</p>'}).join('')+'</div><p><a href="berita.html">&larr; Kembali ke daftar berita</a></p>';
+ }).catch(function(){$('m').innerHTML='<p class="empty">Koneksi gagal. Coba muat ulang.</p>'});
+}else{
+ fetch(API+'?action=public').then(function(r){return r.json()}).then(function(j){
+  $('m').innerHTML='<h1>Berita kegiatan</h1><div class="meta">Kegiatan usaha, keanggotaan, dan rapat anggota.</div><div class="list">'+(j.news.length?j.news.map(function(n){return '<article class="post">'+(n.image_id?'<img loading="lazy" alt="" src="'+img(n.image_id,500)+'">':'<div class="ph"></div>')+'<div class="b"><span class="tag">'+esc(n.category)+'</span><h2><a href="berita.html?slug='+encodeURIComponent(n.slug)+'">'+esc(n.title)+'</a></h2><div class="meta">'+dt(n.published_at)+'</div><p>'+esc(n.excerpt)+'</p></div></article>'}).join(''):'<p class="empty">Belum ada berita.</p>')+'</div>';
+ }).catch(function(){$('m').innerHTML='<p class="empty">Koneksi gagal. Coba muat ulang.</p>'});
+}
+</script>
+</body>
+</html>
