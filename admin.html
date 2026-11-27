@@ -339,7 +339,7 @@ function loadN(){
 }
 function newsForm(p){
  return '<form class="card" id="nf" novalidate style="margin-bottom:16px"><h3 style="margin:0 0 12px">'+(p.id?'Edit berita':'Tulis berita baru')+'</h3><input type="hidden" id="nf-id" value="'+esc(p.id||'')+'">'+
- fld('nf-t','Judul',p.title)+sel('nf-c','Kategori',[['Kegiatan Usaha','Kegiatan Usaha'],['Keanggotaan','Keanggotaan'],['Rapat Anggota','Rapat Anggota']],p.category)+
+ fld('nf-t','Judul',p.title)+sel('nf-c','Kategori',[['Kegiatan Usaha','Kegiatan Usaha'],['Keanggotaan','Keanggotaan'],['Rapat Anggota','Rapat Anggota'],['Kegiatan Sosial','Kegiatan Sosial']],p.category)+
  fld('nf-d','Tanggal terbit',(p.published_at||today()).slice(0,10),'date')+area('nf-e','Cuplikan singkat',p.excerpt,2)+area('nf-k','Isi berita (pisahkan paragraf dengan baris kosong)',p.content,8)+
  '<div class="f"><label for="nf-i">Foto kegiatan (JPG/PNG/WebP, maks. 2 MB)'+(p.image_id?' — kosongkan untuk tetap pakai foto lama':'')+'</label><input id="nf-i" type="file" accept="image/jpeg,image/png,image/webp"></div>'+
  '<div class="acts"><button class="btn" type="submit">Simpan</button><button class="btn alt" type="button" data-n="cancel">Batal</button></div><div class="msg" id="nf-m" role="status"></div></form>';
