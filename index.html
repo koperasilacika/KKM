@@ -15,8 +15,8 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#07142a;--surf:#0d1f3d;--ink:#eef3fb;--mute:#9bb0cf;--navy:#2f5fb3;--navy2:#6ea0f0;--line:#1e3559;--ok:#4ade80;--sh:0 8px 28px rgba(0,0,0,.35)}}
 :root[data-theme="dark"]{--bg:#07142a;--surf:#0d1f3d;--ink:#eef3fb;--mute:#9bb0cf;--navy:#2f5fb3;--navy2:#6ea0f0;--line:#1e3559;--ok:#4ade80;--sh:0 8px 28px rgba(0,0,0,.35)}
 *,*::before,*::after{box-sizing:inherit}
-html{scroll-behavior:smooth;scroll-padding-top:calc(74px + env(safe-area-inset-top,0px))}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;scroll-padding-top:calc(78px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60}
 a{color:inherit}
 .skip{position:absolute;left:-999px;top:8px;background:var(--acc);color:#000;padding:10px 14px;z-index:99;border-radius:8px;font-weight:700}
@@ -24,55 +24,70 @@ a{color:inherit}
 :focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 .wrap{max-width:1160px;margin:0 auto;padding:0 18px}
 
-/* Header & Navigasi Centering + Highlight Animasi */
+/* Header, Brand 3 Baris & Navigasi Centering + Animasi Highlight Universal */
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) header{background:rgba(7,20,42,.92)}}
 :root[data-theme="dark"] header{background:rgba(7,20,42,.92)}
-.bar{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
-.brand{font-weight:800;font-size:16px;text-decoration:none;color:var(--navy);display:flex;align-items:center;gap:10px;letter-spacing:-.02em;min-width:0;flex:none}
-.brand span.bt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lg{width:40px;height:40px;flex:none;border-radius:50%;background:#fff var(--logo) center/contain no-repeat;box-shadow:0 0 0 1px var(--line)}.lg.big{width:88px;height:88px;margin:0 0 16px;box-shadow:0 6px 18px rgba(0,0,0,.2)}.lg.mid{width:60px;height:60px;box-shadow:none}
+.bar{display:flex;align-items:center;justify-content:space-between;min-height:70px;padding:6px 0;gap:12px}
+.brand{text-decoration:none;color:var(--navy);display:flex;align-items:center;gap:11px;flex:none}
+.brand-stack{display:flex;flex-direction:column;font-weight:800;font-size:13.5px;line-height:1.12;letter-spacing:-.015em;text-align:left}
+.lg{width:44px;height:44px;flex:none;border-radius:50%;background:#fff var(--logo) center/contain no-repeat;box-shadow:0 0 0 1px var(--line)}.lg.big{width:88px;height:88px;margin:0 0 16px;box-shadow:0 6px 18px rgba(0,0,0,.2)}.lg.mid{width:60px;height:60px;box-shadow:none}
 
 nav{flex:1;display:flex;justify-content:center}
-nav ul{display:none;list-style:none;margin:0;padding:0;gap:4px;align-items:center;justify-content:center}
-nav a{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:10px;text-decoration:none;font-size:13.5px;font-weight:600;color:var(--mute);white-space:nowrap;overflow:hidden;transition:color .2s ease,background-color .2s ease,transform .12s ease}
-nav a::after{content:"";position:absolute;left:50%;bottom:4px;width:0;height:2.5px;border-radius:99px;background:var(--acc);transform:translateX(-50%);transition:width .24s cubic-bezier(.22,1,.36,1)}
-nav a:hover,nav a:focus-visible{color:var(--navy);background:rgba(37,87,167,.08)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) nav a:hover{color:#fff;background:rgba(110,160,240,.14)}}
-:root[data-theme="dark"] nav a:hover{color:#fff;background:rgba(110,160,240,.14)}
-nav a:hover::after,nav a.active::after{width:64%}
-nav a.active{color:var(--navy);background:rgba(37,87,167,.1);font-weight:700}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) nav a.active{color:#fff;background:rgba(110,160,240,.18)}}
-nav a:active{transform:scale(.95);background:rgba(251,195,29,.22)}
+nav > ul{display:none;list-style:none;margin:0;padding:0;gap:6px;align-items:center;justify-content:center}
+nav li{position:relative}
+.nav-item{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:9px 14px;border-radius:11px;border:0;background:transparent;text-decoration:none;font:600 14px "Plus Jakarta Sans",sans-serif;color:var(--mute);white-space:nowrap;cursor:pointer;overflow:hidden;transition:color .22s ease,background-color .22s ease,transform .14s cubic-bezier(.22,1,.36,1)}
+.nav-item::after{content:"";position:absolute;left:50%;bottom:4px;width:0;height:2.5px;border-radius:99px;background:var(--acc);transform:translateX(-50%);transition:width .24s cubic-bezier(.22,1,.36,1)}
+.nav-item:hover,.nav-item:focus-visible,.nav-item.active{color:var(--navy);background:rgba(37,87,167,.09)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .nav-item:hover,:root:not([data-theme="light"]) .nav-item.active{color:#fff;background:rgba(110,160,240,.16)}}
+:root[data-theme="dark"] .nav-item:hover,:root[data-theme="dark"] .nav-item.active{color:#fff;background:rgba(110,160,240,.16)}
+.nav-item:hover::after,.nav-item.active::after{width:64%}
+.nav-item:active{transform:scale(.95);background:rgba(251,195,29,.25)}
+.chev{font-size:11px;transition:transform .2s ease}
+.has-sub:hover .chev,.has-sub.open .chev{transform:rotate(180deg)}
+
+/* Dropdown Menu Desktop */
+.sub-menu{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%) translateY(-6px);min-width:210px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:6px;box-shadow:0 16px 36px rgba(11,36,71,.16);list-style:none;margin:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,transform .2s cubic-bezier(.22,1,.36,1),visibility .2s}
+.has-sub:hover .sub-menu,.has-sub:focus-within .sub-menu,.has-sub.open .sub-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.sub-menu a{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:9px;text-decoration:none;font-size:13.5px;font-weight:600;color:var(--ink);transition:background .16s,color .16s,transform .12s}
+.sub-menu a:hover,.sub-menu a:focus-visible{background:rgba(37,87,167,.09);color:var(--navy2)}
+.sub-menu a:active{transform:scale(.97);background:rgba(251,195,29,.22)}
 
 .nav-acts{display:flex;align-items:center;gap:8px;flex:none}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border-radius:10px;font-weight:600;text-decoration:none;border:2px solid var(--navy);background:var(--navy);color:var(--on);cursor:pointer;font-size:15px;font-family:inherit;transition:transform .12s,box-shadow .15s,opacity .15s}
-.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(11,36,71,.18)}
-.btn:active{transform:scale(.98)}
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 20px;border-radius:11px;font-weight:600;text-decoration:none;border:2px solid var(--navy);background:var(--navy);color:var(--on);cursor:pointer;font-size:15px;font-family:inherit;transition:transform .16s cubic-bezier(.22,1,.36,1),box-shadow .2s ease,background-color .2s ease,border-color .2s ease}
+.btn::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,.32) 10%,transparent 10.5%);transform:scale(10);opacity:0;transition:transform .45s,opacity .6s;pointer-events:none}
+.btn:active::before{transform:scale(0);opacity:1;transition:0s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(11,36,71,.2)}
+.btn:active{transform:scale(.96)}
 .btn.ghost{background:transparent;color:var(--navy)}
+.btn.ghost:hover{background:rgba(37,87,167,.08)}
 .hdr-cta{display:none}
 
-/* Tombol Hamburger Modern */
-.menu{width:44px;height:44px;padding:0;border:1px solid var(--line);background:var(--surf);color:var(--ink);border-radius:11px;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;transition:background .15s,border-color .15s,transform .12s}
+/* Tombol Hamburger Modern HP & Tablet */
+.menu{width:44px;height:44px;padding:0;border:1px solid var(--line);background:var(--surf);color:var(--ink);border-radius:11px;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;transition:background .18s,border-color .18s,transform .14s}
 .menu:hover{border-color:var(--navy2)}
-.menu:active{transform:scale(.95)}
-.menu span{display:block;width:20px;height:2px;background:currentColor;border-radius:2px;transition:transform .22s ease,opacity .18s ease}
+.menu:active{transform:scale(.93);background:rgba(251,195,29,.22)}
+.menu span{display:block;width:20px;height:2px;background:currentColor;border-radius:2px;transition:transform .24s cubic-bezier(.22,1,.36,1),opacity .18s ease}
 .menu[aria-expanded="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
 .menu[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .menu[aria-expanded="true"] span:nth-child(2){opacity:0}
 .menu[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
-/* Drawer Menu HP & Tablet (Centering + Highlight Animasi) */
-#mnav{display:none;border-top:1px solid var(--line);padding:14px 18px 22px;background:var(--bg);box-shadow:0 18px 36px rgba(11,36,71,.14);max-height:calc(100dvh - 68px);overflow-y:auto}
-#mnav.open{display:block}
-.mnav-grid{display:grid;grid-template-columns:1fr;gap:6px;max-width:520px;margin:0 auto}
-@media (min-width:560px){.mnav-grid{grid-template-columns:1fr 1fr;gap:8px 12px}}
-#mnav a.mlink{position:relative;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px 14px;text-decoration:none;font-weight:600;font-size:15px;border-radius:11px;color:var(--ink);border:1px solid transparent;transition:background .18s,color .18s,border-color .18s,transform .12s}
-#mnav a.mlink:hover,#mnav a.mlink:focus-visible{background:rgba(37,87,167,.08);color:var(--navy2);border-color:rgba(37,87,167,.2)}
-#mnav a.mlink:active{transform:scale(.97);background:rgba(251,195,29,.22);border-color:var(--acc)}
-.mnav-btns{display:grid;grid-template-columns:1fr;gap:10px;max-width:520px;margin:14px auto 0;padding-top:14px;border-top:1px solid var(--line)}
-@media (min-width:480px){.mnav-btns{grid-template-columns:1fr 1fr 1fr}}
-.mnav-btns .btn{min-height:42px;padding:0 12px;font-size:13.5px;width:100%}
+/* Drawer Menu HP & Tablet */
+#mnav{display:none;border-top:1px solid var(--line);padding:14px 18px 22px;background:var(--bg);box-shadow:0 18px 36px rgba(11,36,71,.16);max-height:calc(100dvh - 70px);overflow-y:auto}
+#mnav.open{display:block;animation:slideDown .22s cubic-bezier(.22,1,.36,1)}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.mnav-list{max-width:480px;margin:0 auto;display:grid;gap:6px}
+.mgroup{border:1px solid var(--line);border-radius:12px;background:var(--surf);overflow:hidden}
+.mgroup-btn{width:100%;display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:0;background:transparent;color:var(--ink);font:700 15px "Plus Jakarta Sans",sans-serif;cursor:pointer;transition:background .16s,transform .12s}
+.mgroup-btn:active{transform:scale(.98);background:rgba(251,195,29,.22)}
+.mgroup-sub{display:grid;gap:2px;padding:0 8px 8px;border-top:1px solid var(--line);background:var(--bg)}
+.mgroup-sub[hidden]{display:none!important}
+.mlink{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;text-decoration:none;font-weight:600;font-size:14.5px;border-radius:10px;color:var(--ink);transition:background .18s,color .18s,transform .12s}
+.mlink.top-link{border:1px solid var(--line);background:var(--surf);font-weight:700;font-size:15px}
+.mlink:hover,.mlink:focus-visible{background:rgba(37,87,167,.09);color:var(--navy2)}
+.mlink:active{transform:scale(.97);background:rgba(251,195,29,.24);color:var(--navy)}
+.mlink::after{content:"›";font-size:18px;color:var(--mute);font-weight:400}
 
 .hero{background:linear-gradient(145deg,#0b2447 0%,#14386e 100%);color:var(--on);padding:52px 0 64px}
 .hero .wrap{display:grid;gap:32px}
@@ -85,7 +100,7 @@ h1{font-size:clamp(28px,5.5vw,50px);font-weight:800;line-height:1.12;margin:0 0 
 .panel{background:rgba(255,255,255,.08);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:24px;box-shadow:0 16px 36px rgba(0,0,0,.22)}
 .panel h2{font-size:13.5px;margin:0 0 14px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;opacity:.85}
 .stat{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0;border-top:1px solid rgba(255,255,255,.16)}
-.stat:first-of-type{border-top:0}.stat b{font-size:28px;font-weight:800;letter-spacing:-.02em;color:var(--acc);transition:transform .2s}.stat span{font-size:14.5px;opacity:.9}
+.stat:first-of-type{border-top:0}.stat b{font-size:28px;font-weight:800;letter-spacing:-.02em;color:var(--acc)}.stat span{font-size:14.5px;opacity:.9}
 .note{font-size:12.5px;opacity:.75;margin:12px 0 0}
 section{padding:72px 0}
 section.alt{background:var(--surf)}
@@ -110,8 +125,9 @@ tbody tr:last-child td{border-bottom:0}
 .org-list{margin:0;padding-left:18px;color:var(--ink)}
 .org-list li{margin-bottom:2px}
 .news{display:grid;gap:18px}
-.post{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bg);box-shadow:var(--sh);transition:transform .15s}
-.post:hover{transform:translateY(-2px)}
+.post{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bg);box-shadow:var(--sh);transition:transform .18s ease,box-shadow .18s ease}
+.post:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(11,36,71,.12)}
+.post:active{transform:scale(.98)}
 .ph{height:140px;background:repeating-linear-gradient(135deg,var(--surf),var(--surf) 10px,var(--line) 10px,var(--line) 11px);display:grid;place-items:center;color:var(--mute);font-size:13px}
 .post div.b{padding:18px}.tag{font-size:11.5px;font-weight:700;color:var(--navy2);text-transform:uppercase;letter-spacing:.05em}
 .post h3{margin:6px 0;font-size:17px;font-weight:700;line-height:1.35}.post p{margin:0;color:var(--mute);font-size:14px}
@@ -146,8 +162,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--navy2);box-shadow:0 0
 footer{background:var(--brand);color:var(--on);padding:44px 0}
 footer .wrap{display:grid;gap:10px;font-size:14px}footer a{color:var(--acc);font-weight:600;text-decoration:none}footer a:hover{text-decoration:underline}
 
-@media (min-width:1024px){
-nav ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{display:inline-flex}
+@media (min-width:960px){
+nav > ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{display:inline-flex}
 .hero .wrap{grid-template-columns:1.3fr .9fr;align-items:center}
 .unit{grid-template-columns:64px 1fr 1.4fr;align-items:baseline}
 .two{grid-template-columns:1fr 1fr}.news{grid-template-columns:repeat(3,1fr)}
@@ -160,39 +176,64 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{dis
 <a class="skip" href="#main">Lewati ke konten</a>
 <header>
  <div class="wrap bar">
-  <a class="brand" href="#top"><span class="lg" role="img" aria-label="Logo Primkopasindo, Lapas Kelas IIA Cikarang"></span><span class="bt">Koperasi Konsumen Mandiri</span></a>
-  <nav aria-label="Menu utama"><ul>
-   <li><a href="#usaha">Usaha</a></li>
-   <li><a href="#profil">Profil</a></li>
-   <li><a href="#berita">Berita</a></li>
-   <li><a href="#anggota">Anggota</a></li>
-   <li><a href="#dansos">Dana Sosial</a></li>
-   <li><a href="#pinjam">Simpan Pinjam</a></li>
-   <li><a href="#laporan">Laporan</a></li>
-   <li><a href="anggota.html">Login Anggota</a></li>
-   <li><a href="admin.html">Pengurus</a></li>
-  </ul></nav>
+  <a class="brand" href="#top" aria-label="Koperasi Konsumen Mandiri">
+   <span class="lg" role="img" aria-label="Logo Primkopasindo, Lapas Kelas IIA Cikarang"></span>
+   <span class="brand-stack"><span>Koperasi</span><span>Konsumen</span><span>Mandiri</span></span>
+  </a>
+
+  <nav aria-label="Menu utama">
+   <ul>
+    <li class="has-sub">
+     <button type="button" class="nav-item" aria-expanded="false">Profil <span class="chev">▾</span></button>
+     <ul class="sub-menu">
+      <li><a href="#profil">Visi dan Misi</a></li>
+      <li><a href="#pengurus">Pengurus dan Pengawas</a></li>
+      <li><a href="#usaha">Usaha</a></li>
+     </ul>
+    </li>
+    <li><a class="nav-item" href="#laporan">Laporan</a></li>
+    <li><a class="nav-item" href="#dansos">Dana Sosial</a></li>
+    <li><a class="nav-item" href="#pinjam">Simpan Pinjam</a></li>
+    <li class="has-sub">
+     <button type="button" class="nav-item" aria-expanded="false">Log in <span class="chev">▾</span></button>
+     <ul class="sub-menu">
+      <li><a href="admin.html">Pengurus</a></li>
+      <li><a href="anggota.html">Anggota</a></li>
+     </ul>
+    </li>
+   </ul>
+  </nav>
+
   <div class="nav-acts">
-   <a class="btn hdr-cta" href="#anggota" style="min-height:40px;padding:0 16px;font-size:13.5px">Daftar</a>
+   <a class="btn hdr-cta" href="#anggota" style="min-height:40px;padding:0 16px;font-size:13.5px">Daftar Anggota</a>
    <button class="menu" id="mb" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="mnav">
     <span></span><span></span><span></span>
    </button>
   </div>
  </div>
+
+ <!-- Drawer Menu HP & Tablet -->
  <div id="mnav">
-  <div class="mnav-grid">
-   <a class="mlink" href="#usaha">Unit Usaha</a>
-   <a class="mlink" href="#profil">Profil & Pengurus</a>
-   <a class="mlink" href="#berita">Berita Kegiatan</a>
-   <a class="mlink" href="#anggota">Pendaftaran Anggota</a>
-   <a class="mlink" href="#dansos">Pengajuan Dana Sosial</a>
-   <a class="mlink" href="#pinjam">Simulasi Simpan Pinjam</a>
-   <a class="mlink" href="#laporan">Laporan Usaha</a>
-  </div>
-  <div class="mnav-btns">
-   <a class="btn" href="#anggota">Daftar Anggota</a>
-   <a class="btn ghost" href="anggota.html">Login Anggota</a>
-   <a class="btn ghost" href="admin.html">Login Pengurus</a>
+  <div class="mnav-list">
+   <div class="mgroup">
+    <button type="button" class="mgroup-btn" data-acc="mg-profil" aria-expanded="true">1. Profil <span class="chev">▾</span></button>
+    <div class="mgroup-sub" id="mg-profil">
+     <a class="mlink" href="#profil">Visi dan Misi</a>
+     <a class="mlink" href="#pengurus">Pengurus dan Pengawas</a>
+     <a class="mlink" href="#usaha">Usaha</a>
+    </div>
+   </div>
+   <a class="mlink top-link" href="#laporan">2. Laporan</a>
+   <a class="mlink top-link" href="#dansos">3. Dana Sosial</a>
+   <a class="mlink top-link" href="#pinjam">4. Simpan Pinjam</a>
+   <div class="mgroup">
+    <button type="button" class="mgroup-btn" data-acc="mg-login" aria-expanded="true">5. Log in <span class="chev">▾</span></button>
+    <div class="mgroup-sub" id="mg-login">
+     <a class="mlink" href="admin.html">Log in Pengurus</a>
+     <a class="mlink" href="anggota.html">Log in Anggota</a>
+    </div>
+   </div>
+   <a class="btn" href="#anggota" style="margin-top:6px;width:100%">Daftar Jadi Anggota</a>
   </div>
  </div>
 </header>
@@ -218,23 +259,11 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{dis
  </div>
 </section>
 
-<section id="usaha">
- <div class="wrap">
-  <h2 class="t">Tiga unit usaha koperasi</h2>
-  <p class="sub">Dua unit perdagangan dan satu layanan keuangan untuk anggota.</p>
-  <div class="units">
-   <div class="unit"><span class="n">01</span><h3>Barang & makanan kemasan</h3><p>Penjualan barang kebutuhan sehari-hari dan makanan kemasan.</p></div>
-   <div class="unit"><span class="n">02</span><h3>Makanan jadi harian</h3><p>Makanan siap santap yang disediakan setiap hari.</p></div>
-   <div class="unit"><span class="n">03</span><h3>Simpan pinjam anggota</h3><p>Pengajuan pinjaman dengan tenor 3, 6, 12, atau 24 bulan dan jadwal cicilan yang jelas.</p></div>
-  </div>
- </div>
-</section>
-
 <section id="profil" class="alt">
  <div class="wrap">
-  <h2 class="t">Profil koperasi</h2>
+  <h2 class="t">Visi dan Misi</h2>
   <p class="sub" id="pad">Jln. Cilampayan, Desa Pasirtanjung, Cikarang Pusat, Kabupaten Bekasi.</p>
-  <div class="card" style="margin-bottom:24px">
+  <div class="card" style="margin-bottom:32px">
    <div class="two">
     <div>
      <h3>Visi</h3>
@@ -252,40 +281,55 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{dis
    <p class="note" id="pi" style="color:var(--mute);opacity:1;border-top:1px solid var(--line);padding-top:12px;margin-top:16px">Nomor badan hukum & jam operasional: [isi]</p>
   </div>
 
-  <div class="two">
-   <div class="card">
-    <h3>Susunan Pengurus</h3>
-    <div class="scroll">
-     <table>
-      <thead><tr><th style="width:45%">Jabatan</th><th>Nama</th></tr></thead>
-      <tbody id="po-pengurus">
-       <tr><td>Ketua</td><td>Rido Cahyono</td></tr>
-       <tr><td>Sekretaris</td><td>Pandji Kusumo Pradigyo</td></tr>
-       <tr><td>Bendahara Umum</td><td>Yana Mulyana</td></tr>
-       <tr><td>Bendahara Simpan Pinjam</td><td>Rian Barli</td></tr>
-       <tr><td>Seksi Usaha</td><td><ul class="org-list"><li>Jaka Ariansyah</li><li>Abdul Rovi</li></ul></td></tr>
-      </tbody>
-     </table>
+  <div id="pengurus" style="scroll-margin-top:86px">
+   <h2 class="t" style="font-size:clamp(22px,3.2vw,30px);margin-bottom:16px">Pengurus dan Pengawas</h2>
+   <div class="two">
+    <div class="card">
+     <h3>Susunan Pengurus</h3>
+     <div class="scroll">
+      <table>
+       <thead><tr><th style="width:45%">Jabatan</th><th>Nama</th></tr></thead>
+       <tbody id="po-pengurus">
+        <tr><td>Ketua</td><td>Rido Cahyono</td></tr>
+        <tr><td>Sekretaris</td><td>Pandji Kusumo Pradigyo</td></tr>
+        <tr><td>Bendahara Umum</td><td>Yana Mulyana</td></tr>
+        <tr><td>Bendahara Simpan Pinjam</td><td>Rian Barli</td></tr>
+        <tr><td>Seksi Usaha</td><td><ul class="org-list"><li>Jaka Ariansyah</li><li>Abdul Rovi</li></ul></td></tr>
+       </tbody>
+      </table>
+     </div>
     </div>
-   </div>
 
-   <div class="card">
-    <h3>Badan Pengawas</h3>
-    <div class="scroll">
-     <table>
-      <thead><tr><th style="width:45%">Jabatan</th><th>Nama</th></tr></thead>
-      <tbody id="po-pengawas">
-       <tr><td>Ketua Pengawas</td><td>Eko Adi Prasetio</td></tr>
-       <tr><td>Anggota Pengawas</td><td><ul class="org-list"><li>Niken Dwi Astuti Desmawati</li><li>Sukma Gagah Irawan</li><li>Damaiyanto</li><li>Subud Pramuditya</li></ul></td></tr>
-      </tbody>
-     </table>
+    <div class="card">
+     <h3>Badan Pengawas</h3>
+     <div class="scroll">
+      <table>
+       <thead><tr><th style="width:45%">Jabatan</th><th>Nama</th></tr></thead>
+       <tbody id="po-pengawas">
+        <tr><td>Ketua Pengawas</td><td>Eko Adi Prasetio</td></tr>
+        <tr><td>Anggota Pengawas</td><td><ul class="org-list"><li>Niken Dwi Astuti Desmawati</li><li>Sukma Gagah Irawan</li><li>Damaiyanto</li><li>Subud Pramuditya</li></ul></td></tr>
+       </tbody>
+      </table>
+     </div>
     </div>
    </div>
   </div>
  </div>
 </section>
 
-<section id="berita">
+<section id="usaha">
+ <div class="wrap">
+  <h2 class="t">Unit Usaha Koperasi</h2>
+  <p class="sub">Dua unit perdagangan dan satu layanan keuangan untuk anggota.</p>
+  <div class="units">
+   <div class="unit"><span class="n">01</span><h3>Barang & makanan kemasan</h3><p>Penjualan barang kebutuhan sehari-hari dan makanan kemasan.</p></div>
+   <div class="unit"><span class="n">02</span><h3>Makanan jadi harian</h3><p>Makanan siap santap yang disediakan setiap hari.</p></div>
+   <div class="unit"><span class="n">03</span><h3>Simpan pinjam anggota</h3><p>Pengajuan pinjaman dengan tenor 3, 6, 12, atau 24 bulan dan jadwal cicilan yang jelas.</p></div>
+  </div>
+ </div>
+</section>
+
+<section id="berita" class="alt">
  <div class="wrap">
   <h2 class="t">Berita kegiatan</h2>
   <p class="sub">Kabar terbaru dari kegiatan usaha, keanggotaan, rapat anggota, dan kegiatan sosial.</p>
@@ -294,34 +338,28 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{dis
  </div>
 </section>
 
-<section id="anggota" class="alt">
- <div class="wrap two">
-  <div>
-   <h2 class="t">Jadi anggota</h2>
-   <p class="sub">Daftar online, lalu pengurus memeriksa data dan setoran simpanan pokok Anda.</p>
-   <ol class="steps">
-    <li>Isi formulir dengan data identitas.</li>
-    <li>Data masuk antrean dengan status <i>pending</i>.</li>
-    <li>Pengurus memverifikasi data dan setoran.</li>
-    <li>Anda menerima nomor anggota (contoh: KKM001) dan akun login.</li>
-   </ol>
+<section id="laporan">
+ <div class="wrap">
+  <h2 class="t">Laporan usaha</h2>
+  <p class="sub">Pertanggungjawaban pengurus per periode: barang & makanan kemasan, makanan jadi, dan rekap konsolidasi.</p>
+  <div class="card scroll"><table><thead><tr><th>Laporan</th><th>Periode</th><th>Unit</th><th></th></tr></thead><tbody id="rl"><tr><td colspan="4">Daftar laporan tampil setelah sistem terhubung.</td></tr></tbody></table></div>
+  <div class="lock-banner" role="note">
+   <div class="lock-info">
+    <div class="lock-ico" aria-hidden="true">
+     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    </div>
+    <div class="lock-text">
+     <strong>Akses Dokumen Terbatas untuk Anggota</strong>
+     <span>Demi transparansi dan keamanan internal koperasi, berkas lengkap (PDF) hanya dapat diunduh setelah masuk menggunakan akun anggota aktif.</span>
+    </div>
+   </div>
+   <a class="btn" href="anggota.html" style="min-height:40px;padding:0 16px;font-size:14px">Masuk Portal Anggota</a>
   </div>
-  <form class="card" id="reg" novalidate>
-   <h3>Formulir pendaftaran</h3>
-   <div class="f"><label for="nm">Nama lengkap</label><input id="nm" autocomplete="name" required><div class="err" id="e1"></div></div>
-   <div class="f"><label for="nik">NIK (16 digit)</label><input id="nik" inputmode="numeric" maxlength="16" required><div class="err" id="e2"></div></div>
-   <div class="f"><label for="hp">Nomor HP / WhatsApp</label><input id="hp" type="tel" autocomplete="tel" required><div class="err" id="e3"></div></div>
-   <div class="f"><label for="al">Alamat domisili</label><textarea id="al" rows="2" required></textarea><div class="err" id="e4"></div></div>
-   <div aria-hidden="true" style="position:absolute;left:-9999px"><label for="hp2">Jangan diisi</label><input id="hp2" tabindex="-1" autocomplete="off"></div>
-   <div class="f"><label for="sp">Simpanan pokok awal (Rp 150.000)</label><input id="sp" inputmode="numeric" value="150.000" placeholder="150.000"></div>
-   <button class="btn" type="submit">Kirim pendaftaran</button>
-   <div id="rok" class="ok" role="status" style="margin-top:12px"></div>
-  </form>
  </div>
 </section>
 
 <!-- PENGAJUAN DANA SOSIAL -->
-<section id="dansos">
+<section id="dansos" class="alt">
  <div class="wrap two">
   <div>
    <h2 class="t">Pengajuan dana sosial</h2>
@@ -364,7 +402,6 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{dis
     <div class="err" id="dse-jenis"></div>
    </div>
 
-   <!-- Cabang Bantuan Kesehatan -->
    <div class="branch-box" id="ds-box-sehat" hidden>
     <div class="branch-title">Detail Bantuan Kesehatan (Rawat Inap RS)</div>
     <div class="f">
@@ -386,7 +423,6 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{dis
     </div>
    </div>
 
-   <!-- Cabang Persalinan Anak -->
    <div class="branch-box" id="ds-box-lahir" hidden>
     <div class="branch-title">Detail Persalinan Anak</div>
     <div class="f">
@@ -396,7 +432,6 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{dis
     </div>
    </div>
 
-   <!-- Cabang Bantuan Belasungkawa -->
    <div class="branch-box" id="ds-box-duka" hidden>
     <div class="branch-title">Detail Bantuan Belasungkawa</div>
     <div class="f">
@@ -417,7 +452,6 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{dis
     </div>
    </div>
 
-   <!-- Identitas & Bukti -->
    <div class="f">
     <label for="ds-nama">8. Nama Lengkap Anggota Koperasi <span style="color:#c0392b">*</span></label>
     <input id="ds-nama" autocomplete="name" placeholder="Nama lengkap sesuai data keanggotaan" required>
@@ -444,7 +478,7 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{dis
  </div>
 </section>
 
-<section id="pinjam" class="alt">
+<section id="pinjam">
  <div class="wrap two">
   <div>
    <h2 class="t">Simpan pinjam</h2>
@@ -462,38 +496,29 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{dis
  </div>
 </section>
 
-<section id="laporan">
- <div class="wrap">
-  <h2 class="t">Laporan usaha</h2>
-  <p class="sub">Pertanggungjawaban pengurus per periode: barang & makanan kemasan, makanan jadi, dan rekap konsolidasi.</p>
-  <div class="card scroll"><table><thead><tr><th>Laporan</th><th>Periode</th><th>Unit</th><th></th></tr></thead><tbody id="rl"><tr><td colspan="4">Daftar laporan tampil setelah sistem terhubung.</td></tr></tbody></table></div>
-  <div class="lock-banner" role="note">
-   <div class="lock-info">
-    <div class="lock-ico" aria-hidden="true">
-     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-    </div>
-    <div class="lock-text">
-     <strong>Akses Dokumen Terbatas untuk Anggota</strong>
-     <span>Demi transparansi dan keamanan internal koperasi, berkas lengkap (PDF) hanya dapat diunduh setelah masuk menggunakan akun anggota aktif.</span>
-    </div>
-   </div>
-   <a class="btn" href="anggota.html" style="min-height:40px;padding:0 16px;font-size:14px">Masuk Portal Anggota</a>
-  </div>
- </div>
-</section>
-
-<section id="masuk" class="alt">
+<section id="anggota" class="alt">
  <div class="wrap two">
   <div>
-   <h2 class="t">Portal anggota & pengurus</h2>
-   <p class="sub">Masuk sesuai peran Anda untuk mengakses layanan simpan pinjam, unduhan laporan PDF, atau administrasi koperasi.</p>
+   <h2 class="t">Jadi anggota</h2>
+   <p class="sub">Daftar online, lalu pengurus memeriksa data dan setoran simpanan pokok Anda.</p>
+   <ol class="steps">
+    <li>Isi formulir dengan data identitas.</li>
+    <li>Data masuk antrean dengan status <i>pending</i>.</li>
+    <li>Pengurus memverifikasi data dan setoran.</li>
+    <li>Anda menerima nomor anggota (contoh: KKM001) dan akun login.</li>
+   </ol>
   </div>
-  <div class="card">
-   <h3>Anggota</h3><ul><li>Saldo simpanan pokok, wajib, dan sukarela</li><li>Sisa tagihan dan cicilan terdekat</li><li>Berita terbaru dan unduhan laporan</li></ul>
-   <p style="margin:14px 0 0"><a class="btn" href="anggota.html">Login Anggota</a></p>
-   <h3 style="margin-top:22px">Pengurus</h3><ul><li>Antrean pendaftar, pengajuan pinjaman, dan dana sosial</li><li>Omzet usaha bulan terakhir</li><li>Log aktivitas dan persetujuan cepat</li></ul>
-   <p style="margin:14px 0 0"><a class="btn ghost" href="admin.html">Login Pengurus</a></p>
-  </div>
+  <form class="card" id="reg" novalidate>
+   <h3>Formulir pendaftaran</h3>
+   <div class="f"><label for="nm">Nama lengkap</label><input id="nm" autocomplete="name" required><div class="err" id="e1"></div></div>
+   <div class="f"><label for="nik">NIK (16 digit)</label><input id="nik" inputmode="numeric" maxlength="16" required><div class="err" id="e2"></div></div>
+   <div class="f"><label for="hp">Nomor HP / WhatsApp</label><input id="hp" type="tel" autocomplete="tel" required><div class="err" id="e3"></div></div>
+   <div class="f"><label for="al">Alamat domisili</label><textarea id="al" rows="2" required></textarea><div class="err" id="e4"></div></div>
+   <div aria-hidden="true" style="position:absolute;left:-9999px"><label for="hp2">Jangan diisi</label><input id="hp2" tabindex="-1" autocomplete="off"></div>
+   <div class="f"><label for="sp">Simpanan pokok awal (Rp 150.000)</label><input id="sp" inputmode="numeric" value="150.000" placeholder="150.000"></div>
+   <button class="btn" type="submit">Kirim pendaftaran</button>
+   <div id="rok" class="ok" role="status" style="margin-top:12px"></div>
+  </form>
  </div>
 </section>
 </main>
@@ -513,10 +538,18 @@ nav ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{dis
 var API=window.KKM_API||'';
 var $=function(i){return document.getElementById(i)};
 $('mb').onclick=function(){var o=$('mnav').classList.toggle('open');this.setAttribute('aria-expanded',o)};
-$('mnav').onclick=function(e){if(e.target.tagName==='A'){this.classList.remove('open');$('mb').setAttribute('aria-expanded',false)}};
+$('mnav').onclick=function(e){
+ var acc=e.target.closest('[data-acc]');
+ if(acc){
+  var box=$(acc.dataset.acc);
+  if(box){var h=!box.hidden;box.hidden=h;acc.setAttribute('aria-expanded',!h)}
+  return;
+ }
+ if(e.target.tagName==='A'){this.classList.remove('open');$('mb').setAttribute('aria-expanded',false)}
+};
 
-/* Highlight Menu Aktif saat Diklik / Scroll */
-var navLinks=document.querySelectorAll('nav a[href^="#"], #mnav a.mlink');
+/* Highlight Menu Aktif saat Diklik */
+var navLinks=document.querySelectorAll('nav a, #mnav a.mlink');
 navLinks.forEach(function(a){
  a.addEventListener('click',function(){
   navLinks.forEach(function(x){x.classList.remove('active')});
@@ -536,7 +569,7 @@ function countUp(el,target,dur){
  function step(ts){
   if(!start)start=ts;
   var p=Math.min((ts-start)/ms,1);
-  var ease=1-Math.pow(1-p,3); // easeOutCubic
+  var ease=1-Math.pow(1-p,3);
   var cur=Math.round(from+(to-from)*ease);
   el.textContent=cur.toLocaleString('id-ID');
   if(p<1)requestAnimationFrame(step);
@@ -544,7 +577,6 @@ function countUp(el,target,dur){
  }
  requestAnimationFrame(step);
 }
-// Jalankan animasi awal untuk Unit Usaha Aktif (3)
 countUp($('cU'),3,900);
 
 function rp(n){return 'Rp '+Math.round(n).toLocaleString('id-ID')}
@@ -559,7 +591,6 @@ function sim(){
 }
 ['pa','pt','pr'].forEach(function(i){$(i).addEventListener('input',sim)});sim();
 
-/* Formulir Pendaftaran Anggota */
 $('reg').addEventListener('submit',function(e){
  e.preventDefault();var ok=true;
  function chk(id,eid,bad,msg){$(eid).textContent=bad?msg:'';if(bad)ok=false}
@@ -582,7 +613,6 @@ $('reg').addEventListener('submit',function(e){
  .then(function(){btn.disabled=false});
 });
 
-/* Logika Percabangan Form Dana Sosial */
 function updateDansosBranch(){
  var v=$('ds-jenis').value;
  $('ds-box-sehat').hidden=v.indexOf('Kesehatan')===-1;
