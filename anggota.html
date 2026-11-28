@@ -13,18 +13,40 @@
 :root{--bg:#fff;--surf:#f4f7fc;--ink:#0f1b33;--mute:#4b5a75;--brand:#0b2447;--navy:#0b2447;--navy2:#2557a7;--on:#fff;--line:#dfe6f2;--acc:#fbc31d;--ok:#15803d;--bad:#b91c1c;--logo:url(logo.png);--sh:0 6px 24px rgba(11,36,71,.06);box-sizing:border-box}
 @media (prefers-color-scheme:dark){:root{--bg:#07142a;--surf:#0d1f3d;--ink:#eef3fb;--mute:#9bb0cf;--navy:#2f5fb3;--navy2:#6ea0f0;--line:#1e3559;--ok:#4ade80;--bad:#ff8a7a;--sh:0 8px 28px rgba(0,0,0,.35)}}
 *,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--surf);color:var(--ink);font:15.5px/1.55 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--surf);color:var(--ink);font:15.5px/1.55 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 :focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 .wrap{max-width:1000px;margin:0 auto;padding:0 16px}
-header{background:var(--brand);color:#fff;position:sticky;top:0;z-index:5;box-shadow:0 4px 18px rgba(11,36,71,.18)}
-.bar{display:flex;align-items:center;gap:8px;min-height:62px;flex-wrap:wrap;padding:6px 0}
-.lg{width:40px;height:40px;border-radius:50%;background:#fff var(--logo) center/contain no-repeat;flex:none}
-.bar b{flex:1;font-size:16px;font-weight:700;line-height:1.2;min-width:140px;letter-spacing:-.01em}.bar small{display:block;font-weight:400;opacity:.8;font-size:12px}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:10px;font:600 14.5px inherit;font-family:inherit;border:2px solid var(--navy);background:var(--navy);color:var(--on);cursor:pointer;text-decoration:none;transition:transform .12s,box-shadow .15s}
-.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(11,36,71,.16)}
+
+/* Header Bank Digital & Logo 3 Baris */
+header{background:linear-gradient(135deg,#081c3a 0%,#123466 100%);color:#fff;position:sticky;top:0;z-index:10;box-shadow:0 6px 24px rgba(8,28,58,.24);border-bottom:1px solid rgba(255,255,255,.1)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:68px;padding:8px 0}
+.bar-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;min-width:0}
+.lg{width:42px;height:42px;border-radius:50%;background:#fff var(--logo) center/contain no-repeat;flex:none;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.brand-stack{display:flex;flex-direction:column;font-weight:800;font-size:13px;line-height:1.1;letter-spacing:-.015em;color:#fff}
+.brand-sub{font-size:11px;font-weight:600;color:var(--acc);letter-spacing:.03em;margin-top:2px}
+
+/* Tombol Aksi Header Bergaya Bank Digital */
+.bar-acts{display:flex;align-items:center;gap:6px;flex:none}
+.pill-btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;padding:0 13px;border-radius:999px;font:600 12.5px "Plus Jakarta Sans",sans-serif;color:#fff;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .2s ease,border-color .2s ease,transform .14s cubic-bezier(.22,1,.36,1),box-shadow .2s ease}
+.pill-btn::after{content:"";position:absolute;left:50%;bottom:3px;width:0;height:2px;border-radius:99px;background:var(--acc);transform:translateX(-50%);transition:width .24s cubic-bezier(.22,1,.36,1)}
+.pill-btn:hover,.pill-btn:focus-visible{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.45);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.pill-btn:hover::after{width:55%}
+.pill-btn:active{transform:scale(.94);background:rgba(251,195,29,.28);border-color:var(--acc)}
+.pill-btn.danger{background:rgba(239,68,68,.18);border-color:rgba(252,165,165,.35);color:#fecaca}
+.pill-btn.danger:hover{background:rgba(239,68,68,.3);border-color:#fca5a5;color:#fff}
+.pill-btn svg{width:15px;height:15px;flex:none}
+@media(max-width:560px){.pill-btn{padding:0 10px;min-height:36px}.hide-xs{display:none}}
+
+/* Tombol Universal dengan Ripple & Press */
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 18px;border-radius:11px;font:600 14.5px inherit;font-family:inherit;border:2px solid var(--navy);background:var(--navy);color:var(--on);cursor:pointer;text-decoration:none;transition:transform .16s cubic-bezier(.22,1,.36,1),box-shadow .2s ease,background-color .2s}
+.btn::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,.32) 10%,transparent 10.5%);transform:scale(10);opacity:0;transition:transform .45s,opacity .6s;pointer-events:none}
+.btn:active::before{transform:scale(0);opacity:1;transition:0s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(11,36,71,.18)}
+.btn:active{transform:scale(.96)}
 .btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
 .btn.bad{background:transparent;border-color:var(--bad);color:var(--bad)}
-.btn.ghost{background:transparent;border-color:rgba(255,255,255,.55);color:#fff;min-height:38px;padding:0 12px;font-size:13.5px}
+.btn.alt{background:transparent;color:var(--navy)}
+.btn.alt:hover{background:rgba(37,87,167,.08)}
 .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
 [hidden]{display:none!important}
 .card{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--sh)}
@@ -33,9 +55,10 @@ input[type=text],input[type=password],input[type=search]{width:100%;min-height:4
 input:focus,select:focus,textarea:focus{border-color:var(--navy2);box-shadow:0 0 0 3px rgba(37,87,167,.12);outline:none}
 .pw-wrap{position:relative;display:flex;align-items:center}
 .pw-wrap input{padding-right:44px}
-.pw-eye{position:absolute;right:6px;background:none;border:0;color:var(--mute);cursor:pointer;width:36px;height:36px;display:grid;place-items:center;border-radius:8px;font-size:16px}
+.pw-eye{position:absolute;right:6px;background:none;border:0;color:var(--mute);cursor:pointer;width:36px;height:36px;display:grid;place-items:center;border-radius:8px;font-size:16px;transition:transform .12s,background .15s}
 .pw-eye:hover{color:var(--ink);background:var(--surf)}
-#login{max-width:400px;margin:56px auto}
+.pw-eye:active{transform:scale(.9)}
+#login{max-width:400px;margin:48px auto}
 #login h1{font-size:23px;font-weight:800;letter-spacing:-.02em;margin:0 0 18px}.f{margin-bottom:14px}
 .msg{min-height:20px;font-size:14px;margin-top:10px;color:var(--bad);font-weight:500}
 #app{display:none;padding:22px 0 52px}
@@ -50,7 +73,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--navy2);box-shadow:0 0
 .acts{display:flex;flex-wrap:wrap;gap:8px}
 .empty{text-align:center;color:var(--mute);padding:40px 0}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--brand);color:#fff;padding:12px 18px;border-radius:10px;display:none;max-width:90%;z-index:20;box-shadow:0 8px 24px rgba(0,0,0,.25)}
-.btn.alt{background:transparent;color:var(--navy)}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line)}th{color:var(--mute);font-size:12px;font-weight:700;text-transform:uppercase}.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line)}th{color:var(--mute);font-size:12px;font-weight:700;text-transform:uppercase}.scroll{overflow-x:auto}
 select,textarea{width:100%;min-height:44px;padding:10px 13px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
 .res{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:15px;margin-bottom:14px}.res b{font-size:23px;font-weight:800;letter-spacing:-.02em}
 .grid{display:grid;gap:18px}@media(min-width:800px){.grid{grid-template-columns:1fr 1.4fr;align-items:start}}
@@ -60,13 +83,37 @@ h2{font-size:18px;font-weight:700;letter-spacing:-.01em;margin:0 0 12px}
 .kpi{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--sh)}
 .kpi small{color:var(--mute);display:block;font-size:13px;font-weight:500}.kpi b{font-size:21px;font-weight:800;letter-spacing:-.02em;display:block;margin-top:4px}
 .news{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-bottom:26px}
-.post{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bg);box-shadow:var(--sh)}.post img,.post .ph{width:100%;height:120px;object-fit:cover;display:block;background:var(--surf)}.post .b{padding:14px}.post h3{margin:5px 0;font-size:15.5px;font-weight:700}.post a{text-decoration:none;color:inherit}.tag{font-size:11px;font-weight:700;color:var(--navy2);text-transform:uppercase;letter-spacing:.05em}
+.post{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bg);box-shadow:var(--sh);transition:transform .16s}.post:hover{transform:translateY(-2px)}.post img,.post .ph{width:100%;height:120px;object-fit:cover;display:block;background:var(--surf)}.post .b{padding:14px}.post h3{margin:5px 0;font-size:15.5px;font-weight:700}.post a{text-decoration:none;color:inherit}.tag{font-size:11px;font-weight:700;color:var(--navy2);text-transform:uppercase;letter-spacing:.05em}
 .helper-note{font-size:13px;color:var(--mute);background:var(--surf);padding:11px 13px;border-radius:10px;border-left:3px solid var(--acc);margin:14px 0 0;line-height:1.45}
 dialog{border:1px solid var(--line);border-radius:16px;background:var(--bg);color:var(--ink);padding:22px;max-width:390px;width:calc(100% - 32px);box-shadow:0 20px 48px rgba(0,0,0,.25)}dialog::backdrop{background:rgba(0,0,0,.55);backdrop-filter:blur(4px)}dialog h2{margin:0 0 14px;font-size:18px;font-weight:700}
 </style>
 </head>
 <body>
-<header><div class="wrap bar"><a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;flex:1"><span class="lg" role="img" aria-label="Logo koperasi"></span><b>Portal Anggota<small>Koperasi Konsumen Mandiri</small></b></a><a class="btn ghost" href="index.html">&larr; Dashboard Utama</a><button class="btn ghost" id="pwb" aria-label="Ganti password" hidden>Ganti Password</button><button class="btn ghost" id="out" hidden>Keluar</button></div></header>
+<header>
+ <div class="wrap bar">
+  <a class="bar-brand" href="index.html">
+   <span class="lg" role="img" aria-label="Logo koperasi"></span>
+   <div>
+    <div class="brand-stack"><span>Koperasi</span><span>Konsumen</span><span>Mandiri</span></div>
+    <div class="brand-sub">Portal Anggota</div>
+   </div>
+  </a>
+  <div class="bar-acts">
+   <a class="pill-btn" href="index.html" title="Kembali ke Dashboard Utama">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="hide-xs">Beranda</span>
+   </a>
+   <button class="pill-btn" id="pwb" type="button" aria-label="Ganti password" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    <span class="hide-xs">Ganti Password</span>
+   </button>
+   <button class="pill-btn danger" id="out" type="button" aria-label="Keluar" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+    <span>Keluar</span>
+   </button>
+  </div>
+ </div>
+</header>
 <main class="wrap">
  <form class="card" id="login" novalidate>
   <h1>Masuk anggota</h1>
@@ -81,7 +128,7 @@ dialog{border:1px solid var(--line);border-radius:16px;background:var(--bg);colo
  <section id="app" aria-label="Pinjaman saya">
   <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin:0 0 16px">
    <p style="margin:0;font-size:16px">Halo, <b id="nm"></b></p>
-   <a href="index.html" style="font-size:14px;color:var(--navy2);font-weight:600;text-decoration:none">&larr; Kembali ke Beranda Koperasi</a>
+   <a href="index.html#dansos" class="btn alt" style="min-height:36px;padding:0 14px;font-size:13px">Ajukan Dana Sosial &rarr;</a>
   </div>
   <div class="kpis" id="kpi"></div>
   <div class="grid">
