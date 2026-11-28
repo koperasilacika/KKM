@@ -172,8 +172,10 @@ nav > ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{d
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .ph img{width:100%;height:100%;object-fit:cover;display:block}.post h3 a{text-decoration:none}
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
 </head>
-<body>
+<body class="site">
 <a class="skip" href="#main">Lewati ke konten</a>
 <header>
  <div class="wrap bar">
@@ -241,7 +243,7 @@ nav > ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{d
 
 <main id="main">
 <div id="top"></div>
-<section class="hero" style="padding-top:52px">
+<section class="hero">
  <div class="wrap">
   <div>
    <p class="eyebrow">Cikarang Pusat, Kabupaten Bekasi</p>
@@ -258,6 +260,7 @@ nav > ul{display:flex}.menu{display:none}#mnav{display:none!important}.hdr-cta{d
    <p class="note">Angka anggota diambil dari data keanggotaan saat sistem terhubung.</p>
   </aside>
  </div>
+ <a class="scroll-cue" href="#profil" aria-label="Gulir ke bawah"></a>
 </section>
 
 <section id="profil" class="alt">
@@ -716,5 +719,7 @@ if(API){fetch(API+'?action=public').then(function(r){return r.json()}).then(func
  $('rl').innerHTML=j.reports.length?j.reports.slice(0,6).map(function(r){return '<tr><td>'+esc(r.title)+'</td><td>'+esc(r.period_label)+'</td><td>'+esc(UN[r.business_unit]||r.business_unit)+'</td><td><a href="anggota.html" style="color:var(--navy2);font-weight:600">Masuk untuk unduh</a></td></tr>'}).join(''):'<tr><td colspan="4">Belum ada laporan.</td></tr>';
 }).catch(function(){})}
 </script>
+<a class="fab" id="fab" href="#top" aria-label="Kembali ke atas">&uarr;</a>
+<script>(function(){var f=document.getElementById("fab"),h=document.querySelector("header");function s(){var y=window.scrollY||0;f.classList.toggle("show",y>600);h.classList.toggle("scrolled",y>20)}addEventListener("scroll",s,{passive:true});s()})();</script>
 </body>
 </html>
