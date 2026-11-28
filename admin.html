@@ -13,20 +13,42 @@
 :root{--bg:#fff;--surf:#f4f7fc;--ink:#0f1b33;--mute:#4b5a75;--brand:#0b2447;--navy:#0b2447;--navy2:#2557a7;--on:#fff;--line:#dfe6f2;--acc:#fbc31d;--ok:#15803d;--bad:#b91c1c;--logo:url(logo.png);--sh:0 6px 24px rgba(11,36,71,.06);box-sizing:border-box}
 @media (prefers-color-scheme:dark){:root{--bg:#07142a;--surf:#0d1f3d;--ink:#eef3fb;--mute:#9bb0cf;--navy:#2f5fb3;--navy2:#6ea0f0;--line:#1e3559;--ok:#4ade80;--bad:#ff8a7a;--sh:0 8px 28px rgba(0,0,0,.35)}}
 *,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--surf);color:var(--ink);font:15px/1.55 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--surf);color:var(--ink);font:15px/1.55 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 :focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 .wrap{max-width:1180px;margin:0 auto;padding:0 16px}
-header{background:var(--brand);color:#fff;position:sticky;top:0;z-index:10;box-shadow:0 4px 18px rgba(11,36,71,.18)}
-.bar{display:flex;align-items:center;gap:8px;min-height:62px;flex-wrap:wrap;padding:6px 0}
-.lg{width:40px;height:40px;border-radius:50%;background:#fff var(--logo) center/contain no-repeat;flex:none}
-.bar b{flex:1;font-size:16px;font-weight:700;line-height:1.2;min-width:140px;letter-spacing:-.01em}.bar small{display:block;font-weight:400;opacity:.8;font-size:12px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0 15px;border-radius:10px;font:600 14px inherit;font-family:inherit;border:2px solid var(--navy);background:var(--navy);color:var(--on);cursor:pointer;text-decoration:none;white-space:nowrap;transition:transform .12s,box-shadow .15s}
-.btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(11,36,71,.15)}
+
+/* Header Bank Digital & Logo 3 Baris */
+header{background:linear-gradient(135deg,#081c3a 0%,#123466 100%);color:#fff;position:sticky;top:0;z-index:10;box-shadow:0 6px 24px rgba(8,28,58,.24);border-bottom:1px solid rgba(255,255,255,.1)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:68px;padding:8px 0}
+.bar-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;min-width:0}
+.lg{width:42px;height:42px;border-radius:50%;background:#fff var(--logo) center/contain no-repeat;flex:none;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.brand-stack{display:flex;flex-direction:column;font-weight:800;font-size:13px;line-height:1.1;letter-spacing:-.015em;color:#fff}
+.brand-sub{font-size:11px;font-weight:600;color:var(--acc);letter-spacing:.03em;margin-top:2px}
+
+/* Tombol Aksi Header Bergaya Bank Digital */
+.bar-acts{display:flex;align-items:center;gap:6px;flex:none}
+.pill-btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;padding:0 13px;border-radius:999px;font:600 12.5px "Plus Jakarta Sans",sans-serif;color:#fff;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .2s ease,border-color .2s ease,transform .14s cubic-bezier(.22,1,.36,1),box-shadow .2s ease}
+.pill-btn::after{content:"";position:absolute;left:50%;bottom:3px;width:0;height:2px;border-radius:99px;background:var(--acc);transform:translateX(-50%);transition:width .24s cubic-bezier(.22,1,.36,1)}
+.pill-btn:hover,.pill-btn:focus-visible{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.45);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.pill-btn:hover::after{width:55%}
+.pill-btn:active{transform:scale(.94);background:rgba(251,195,29,.28);border-color:var(--acc)}
+.pill-btn.danger{background:rgba(239,68,68,.18);border-color:rgba(252,165,165,.35);color:#fecaca}
+.pill-btn.danger:hover{background:rgba(239,68,68,.3);border-color:#fca5a5;color:#fff}
+.pill-btn svg{width:15px;height:15px;flex:none}
+@media(max-width:560px){.pill-btn{padding:0 10px;min-height:36px}.hide-xs{display:none}}
+
+/* Tombol & Tab Universal dengan Animasi Ripple + Press */
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0 15px;border-radius:10px;font:600 14px inherit;font-family:inherit;border:2px solid var(--navy);background:var(--navy);color:var(--on);cursor:pointer;text-decoration:none;white-space:nowrap;transition:transform .16s cubic-bezier(.22,1,.36,1),box-shadow .2s ease,background-color .2s}
+.btn::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,.32) 10%,transparent 10.5%);transform:scale(10);opacity:0;transition:transform .45s,opacity .6s;pointer-events:none}
+.btn:active::before{transform:scale(0);opacity:1;transition:0s}
+.btn:hover{transform:translateY(-1.5px);box-shadow:0 6px 16px rgba(11,36,71,.18)}
+.btn:active{transform:scale(.95)}
 .btn.sm{min-height:32px;padding:0 10px;font-size:12.5px;border-width:1.5px;border-radius:7px}
 .btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
 .btn.bad{background:transparent;border-color:var(--bad);color:var(--bad)}
+.btn.bad:hover{background:rgba(185,28,28,.08)}
 .btn.alt{background:transparent;color:var(--navy)}
-.btn.ghost{background:transparent;border-color:rgba(255,255,255,.55);color:#fff;min-height:36px;padding:0 12px;font-size:13px}
+.btn.alt:hover{background:rgba(37,87,167,.08)}
 .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
 [hidden]{display:none!important}
 .card{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:var(--sh)}
@@ -35,15 +57,18 @@ input[type=text],input[type=password],input[type=search],input[type=date],select
 input:focus,select:focus,textarea:focus{border-color:var(--navy2);box-shadow:0 0 0 3px rgba(37,87,167,.12);outline:none}
 .pw-wrap{position:relative;display:flex;align-items:center}
 .pw-wrap input{padding-right:44px}
-.pw-eye{position:absolute;right:6px;background:none;border:0;color:var(--mute);cursor:pointer;width:34px;height:34px;display:grid;place-items:center;border-radius:8px}
+.pw-eye{position:absolute;right:6px;background:none;border:0;color:var(--mute);cursor:pointer;width:34px;height:34px;display:grid;place-items:center;border-radius:8px;transition:transform .12s,background .15s}
 .pw-eye:hover{color:var(--ink);background:var(--surf)}
-#login{max-width:400px;margin:52px auto}
+.pw-eye:active{transform:scale(.9)}
+#login{max-width:400px;margin:48px auto}
 #login h1{font-size:23px;font-weight:800;letter-spacing:-.02em;margin:0 0 18px}.f{margin-bottom:14px}
 .msg{min-height:20px;font-size:14px;margin-top:10px;color:var(--bad);font-weight:500}
 #app{display:none;padding:22px 0 52px}
 .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
-.tab{min-height:38px;padding:0 15px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 13.5px inherit;font-family:inherit;cursor:pointer;transition:background .15s,border-color .15s}
-.tab[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:var(--on);box-shadow:0 4px 12px rgba(11,36,71,.18)}
+.tab{position:relative;overflow:hidden;min-height:38px;padding:0 15px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 13.5px inherit;font-family:inherit;cursor:pointer;transition:background .18s,border-color .18s,color .18s,transform .14s cubic-bezier(.22,1,.36,1),box-shadow .18s}
+.tab:hover{border-color:var(--navy2);background:rgba(37,87,167,.06)}
+.tab:active{transform:scale(.95)}
+.tab[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:var(--on);box-shadow:0 4px 12px rgba(11,36,71,.2)}
 .tab span{opacity:.8;font-weight:600;margin-left:5px}
 .search{flex:1;min-width:200px}
 .item{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:12px;display:grid;gap:10px;box-shadow:var(--sh)}
@@ -51,9 +76,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--navy2);box-shadow:0 0
 .meta{display:grid;gap:6px 16px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));font-size:14px;color:var(--mute)}
 .meta b{color:var(--ink);font-weight:600}
 .badge{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--surf);border:1px solid var(--line);white-space:nowrap}
-.badge.pending{border-color:var(--acc);color:var(--ink);background:rgba(251,195,29,.16)}
-.badge.active{color:var(--ok);border-color:var(--ok);background:rgba(21,128,61,.09)}
-.badge.rejected{color:var(--bad);border-color:var(--bad);background:rgba(185,28,28,.09)}
+.badge.pending{border-color:var(--acc);color:var(--ink);background:rgba(251,195,29,.16)}.badge.active,.badge.approved{color:var(--ok);border-color:var(--ok);background:rgba(21,128,61,.09)}.badge.rejected{color:var(--bad);border-color:var(--bad);background:rgba(185,28,28,.09)}
 .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
 .acts{display:flex;flex-wrap:wrap;gap:6px}
 .empty{text-align:center;color:var(--mute);padding:40px 0}
@@ -85,10 +108,34 @@ dialog::backdrop{background:rgba(0,0,0,.55);backdrop-filter:blur(4px)}dialog h2{
 </style>
 </head>
 <body>
-<header><div class="wrap bar"><a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;flex:1"><span class="lg" role="img" aria-label="Logo koperasi"></span><b>Panel Pengurus<small>Koperasi Konsumen Mandiri</small></b></a><a class="btn ghost" href="index.html">&larr; Dashboard Utama</a><button class="btn ghost" id="pwb" aria-label="Ganti password" hidden>Ganti Password</button><button class="btn ghost" id="out" hidden>Keluar</button></div></header>
+<header>
+ <div class="wrap bar">
+  <a class="bar-brand" href="index.html">
+   <span class="lg" role="img" aria-label="Logo koperasi"></span>
+   <div>
+    <div class="brand-stack"><span>Koperasi</span><span>Konsumen</span><span>Mandiri</span></div>
+    <div class="brand-sub">Panel Pengurus</div>
+   </div>
+  </a>
+  <div class="bar-acts">
+   <a class="pill-btn" href="index.html" title="Kembali ke Dashboard Utama">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="hide-xs">Beranda</span>
+   </a>
+   <button class="pill-btn" id="pwb" type="button" aria-label="Ganti password" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    <span class="hide-xs">Ganti Password</span>
+   </button>
+   <button class="pill-btn danger" id="out" type="button" aria-label="Keluar" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+    <span>Keluar</span>
+   </button>
+  </div>
+ </div>
+</header>
 
 <main class="wrap">
- <form class="card" id="login" novalidate style="max-width:400px;margin:52px auto">
+ <form class="card" id="login" novalidate style="max-width:400px;margin:48px auto">
   <h1>Masuk pengurus</h1>
   <div class="f"><label for="u">Username</label><input id="u" type="text" autocomplete="username" autocapitalize="none" required></div>
   <div class="f"><label for="p">Password</label><div class="pw-wrap"><input id="p" type="password" autocomplete="current-password" required><button type="button" class="pw-eye" data-eye="p" aria-label="Tampilkan password">👁</button></div></div>
@@ -100,14 +147,11 @@ dialog::backdrop{background:rgba(0,0,0,.55);backdrop-filter:blur(4px)}dialog h2{
  </form>
 
  <section id="app" aria-label="Panel Pengurus">
-  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px">
-   <span style="font-size:14px;color:var(--mute)">Panel Administrasi & Pengelolaan Koperasi</span>
-   <a href="index.html" style="font-size:14px;color:var(--navy2);font-weight:600;text-decoration:none">&larr; Kembali ke Beranda Utama</a>
-  </div>
   <div class="tools" id="views" role="group" aria-label="Bagian">
    <button class="tab" type="button" data-v="dash" aria-pressed="true">Dashboard</button>
    <button class="tab" type="button" data-v="members" aria-pressed="false">Anggota</button>
    <button class="tab" type="button" data-v="loans" aria-pressed="false">Pinjaman</button>
+   <button class="tab" type="button" data-v="dansos" aria-pressed="false">Dana Sosial</button>
    <button class="tab" type="button" data-v="news" aria-pressed="false">Berita</button>
    <button class="tab" type="button" data-v="reports" aria-pressed="false">Laporan</button>
    <button class="tab" type="button" data-v="profile" aria-pressed="false">Profil</button>
@@ -151,7 +195,7 @@ dialog::backdrop{background:rgba(0,0,0,.55);backdrop-filter:blur(4px)}dialog h2{
 var API=window.KKM_API||'';
 var $=function(i){return document.getElementById(i)};
 function ss(k,v){try{if(v===undefined)return sessionStorage.getItem(k)||'';if(v===null)sessionStorage.removeItem(k);else sessionStorage.setItem(k,v)}catch(e){return ''}}
-var S={token:ss('kkm_t'),rows:[],tab:'pending',view:'dash',loans:[],inst:[],open:{},bulkRows:[],bulkDone:[]};
+var S={token:ss('kkm_t'),rows:[],tab:'pending',view:'dash',loans:[],inst:[],dansos:[],open:{},bulkRows:[],bulkDone:[]};
 var TABS=[['pending','Menunggu'],['active','Aktif'],['rejected','Ditolak'],['all','Semua']];
 var TARIF_POKOK=150000;
 
@@ -182,7 +226,6 @@ $('login').addEventListener('submit',function(e){
  }).catch(function(err){$('lm').textContent=err.message||'Koneksi gagal.'}).then(function(){b.disabled=false});
 });
 
-/* ---- Perhitungan Lama Gabung & Simpanan Otomatis (Rp 150.000 / bulan) ---- */
 function calcTenure(joinStr){
  var now=new Date();
  var jd=joinStr?new Date(joinStr):now;
@@ -192,7 +235,6 @@ function calcTenure(joinStr){
  return{months:m,amount:m*TARIF_POKOK};
 }
 
-/* ---- Pendaftaran Massal / Upload CSV Anggota Lama & Baru ---- */
 $('bulkb').onclick=function(){
  var box=$('bulkbox');
  if(!box.hidden){box.hidden=true;return}
@@ -343,7 +385,7 @@ $('bulkbox').addEventListener('click',function(e){
  }
 });
 
-/* ---- Daftar Anggota (Format Tabel Rapi + Aksi) ---- */
+/* ---- Daftar Anggota ---- */
 function loadM(){
  $('list').innerHTML='<p class="empty">Memuat daftar anggota…</p>';
  call({action:'list',token:S.token}).then(function(j){
@@ -418,17 +460,70 @@ $('list').onclick=function(e){
  }).catch(function(){toast('Koneksi gagal.');b.disabled=false});
 };
 
-function render(){S.view==='loans'?renderL():renderM()}
+function render(){
+ if(S.view==='loans')renderL();
+ else if(S.view==='dansos')renderDS();
+ else renderM();
+}
 function load(){
- var c=S.view==='members'||S.view==='loans';
+ var c=S.view==='members'||S.view==='loans'||S.view==='dansos';
  $('tabs').style.display=$('stools').style.display=c?'':'none';
  $('csvb').hidden=$('bulkb').hidden=S.view!=='members';
  if(S.view!=='members')$('bulkbox').hidden=true;
- ({members:loadM,loans:loadL,dash:loadD,news:loadN,reports:loadR,profile:loadP})[S.view]();
+ ({members:loadM,loans:loadL,dansos:loadDS,dash:loadD,news:loadN,reports:loadR,profile:loadP})[S.view]();
 }
 $('views').onclick=function(e){var b=e.target.closest('[data-v]');if(!b)return;S.view=b.dataset.v;S.tab='pending';$('q').value='';[].forEach.call($('views').children,function(x){x.setAttribute('aria-pressed',x===b)});load()};
 
-/* ---- Pinjaman (Tampilan Tabel Ringkas Seperti Daftar Anggota) ---- */
+/* ---- Dana Sosial ---- */
+var DT=[['pending','Menunggu'],['approved','Disetujui / Cair'],['rejected','Ditolak'],['all','Semua']];
+var DL={pending:'Menunggu',approved:'Disetujui',rejected:'Ditolak'};
+function loadDS(){
+ $('list').innerHTML='<p class="empty">Memuat pengajuan dana sosial…</p>';
+ call({action:'dansos_list',token:S.token}).then(function(j){
+  if(j.expired){logout(j.error);return}
+  if(!j.ok){$('list').innerHTML='<p class="empty">'+esc(j.error||'Belum ada data dana sosial.')+'</p>';return}
+  S.dansos=(j.rows||[]).slice().reverse();renderDS();
+ }).catch(function(){$('list').innerHTML='<p class="empty">Koneksi gagal. Pastikan Code.gs sudah di-deploy versi terbaru.</p>'});
+}
+function renderDS(){
+ var n=function(k){return k==='all'?S.dansos.length:S.dansos.filter(function(d){return String(d.status).trim()===k}).length};
+ $('tabs').innerHTML=DT.map(function(t){return '<button class="tab" type="button" data-t="'+t[0]+'" aria-pressed="'+(S.tab===t[0])+'">'+t[1]+'<span>'+n(t[0])+'</span></button>'}).join('');
+ var q=$('q').value.toLowerCase().trim();
+ var rows=S.dansos.filter(function(d){
+  var st=String(d.status||'pending').trim();
+  return (S.tab==='all'||st===S.tab)&&(!q||(d.dansos_code+' '+d.nama_anggota+' '+d.jenis_dana_sosial+' '+d.nomor_rekening).toLowerCase().indexOf(q)>-1);
+ });
+ if(!rows.length){$('list').innerHTML='<p class="empty">Tidak ada pengajuan dana sosial pada kategori ini.</p>';return}
+
+ var body=rows.map(function(d,idx){
+  var st=String(d.status||'pending').trim();
+  var det='';
+  if(d.lama_rawat_inap)det+='Rawat inap '+esc(d.lama_rawat_inap)+' hari ('+dt(d.tgl_awal_rawat)+' s.d. '+dt(d.tgl_akhir_rawat)+')';
+  if(d.tgl_kelahiran_anak)det+='Tgl Lahir Anak: '+dt(d.tgl_kelahiran_anak);
+  if(d.keluarga_meninggal)det+='Meninggal: '+esc(d.keluarga_meninggal)+' ('+dt(d.tgl_peristiwa_duka)+')';
+  var buktiUrl=d.bukti_url||(d.bukti_id?'https://drive.google.com/file/d/'+d.bukti_id+'/view':'');
+  var buktiLink=buktiUrl?'<a class="wa-link" target="_blank" rel="noopener" href="'+esc(buktiUrl)+'">Lihat Bukti</a>':'<span class="sub-txt">-</span>';
+  var acts=st==='pending'
+   ?'<div class="acts"><button class="btn sm ok" data-ds="ds_approve" data-r="'+esc(d.dansos_code)+'">Setujui</button><button class="btn sm bad" data-ds="ds_reject" data-r="'+esc(d.dansos_code)+'">Tolak</button></div>'
+   :'<span class="sub-txt">—</span>';
+  return '<tr>'+
+   '<td><b>'+(idx+1)+'</b></td>'+
+   '<td><b>'+esc(d.dansos_code||'-')+'</b><span class="sub-txt">'+dt(d.created_at)+'</span></td>'+
+   '<td><b>'+esc(d.nama_anggota)+'</b></td>'+
+   '<td><b>'+esc(d.jenis_dana_sosial)+'</b><span class="sub-txt">'+det+'</span></td>'+
+   '<td><b>'+esc(d.nomor_rekening)+'</b><span class="sub-txt">Santunan: Rp 1.000.000</span></td>'+
+   '<td>'+buktiLink+'</td>'+
+   '<td><span class="badge '+esc(st)+'">'+esc(DL[st]||st)+'</span></td>'+
+   '<td>'+acts+'</td>'+
+  '</tr>';
+ }).join('');
+
+ $('list').innerHTML='<div class="tbl-card"><div class="scroll"><table><thead><tr>'+
+  '<th style="width:40px">No</th><th>Kode & Tgl</th><th>Nama Anggota</th><th>Jenis & Keterangan Peristiwa</th><th>Rekening Tujuan</th><th>Bukti</th><th>Status</th><th>Aksi</th>'+
+ '</tr></thead><tbody>'+body+'</tbody></table></div></div>';
+}
+
+/* ---- Pinjaman ---- */
 var LT=[['pending','Menunggu'],['approved','Berjalan'],['paid_off','Lunas'],['rejected','Ditolak'],['all','Semua']];
 var LL={pending:'Menunggu',approved:'Berjalan',rejected:'Ditolak',paid_off:'Lunas'},IL={paid:'Lunas',overdue:'Jatuh tempo',unpaid:'Belum bayar'};
 function loadL(){
@@ -481,6 +576,19 @@ function renderL(){
  '</tr></thead><tbody>'+body+'</tbody></table></div></div>';
 }
 $('list').addEventListener('click',function(e){
+ var dsb=e.target.closest('[data-ds]');
+ if(dsb){
+  var act=dsb.dataset.ds,code=dsb.dataset.r,ap=act==='ds_approve';
+  if(!confirm((ap?'Setujui pencairan dana sosial Rp 1.000.000 untuk ':'Tolak pengajuan dana sosial ')+code+'?'))return;
+  dsb.disabled=true;
+  call({action:act,token:S.token,dansos_code:code}).then(function(j){
+   if(j.expired){logout(j.error);return}
+   dsb.disabled=false;
+   if(!j.ok){toast(j.error||'Gagal.');return}
+   toast(ap?'Pengajuan dana sosial disetujui.':'Pengajuan ditolak.');loadDS();
+  }).catch(function(){dsb.disabled=false;toast('Koneksi gagal.')});
+  return;
+ }
  var b=e.target.closest('[data-l]');if(!b)return;var k=b.dataset.l,r=b.dataset.r;
  if(k==='open'){S.open[r]=!S.open[r];renderL();return}
  var M={acct:['make_account','Buat password login baru untuk '+r+'? Password lama (jika ada) tidak berlaku lagi.'],lok:['loan_approve','Setujui pinjaman '+r+'? Jadwal cicilan akan dibuat otomatis.'],lno:['loan_reject','Tolak pinjaman '+r+'?'],pay:['pay','Konfirmasi pembayaran cicilan ke-'+b.dataset.n+' untuk '+r+'?']}[k];
